@@ -1,0 +1,6 @@
+Put your licensed brand-ambassador cutout here, named exactly:
+
+    ambassador.png
+
+Use a transparent-background PNG. Until you add it, the page shows a
+styled dashed placeholder frame in the hero, so nothing looks broken.
