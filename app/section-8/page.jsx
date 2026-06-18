@@ -310,7 +310,7 @@ export default function Section8Page() {
 
                         <div className="col-lg-6 d-flex align-items-center">
                             <div className="vk-form w-100" id="enquiry">
-                                <span className="ff-pill">Free Consultation</span>
+                                <span className="ff-pill">Instant Rewards</span>
                                 {!done ? (
                                     <>
                                         <h3 className="ff-title">Need Help with Section 8 / NGO Registration?</h3>
@@ -612,16 +612,74 @@ export default function Section8Page() {
 
                             <div className="col-lg-6 text-lg-end mt-3 mt-lg-0">
 
-                                <span className="section-8-fee-pill">
-                                    Professional fee only —
-                                    GST & govt. fees extra
-                                </span>
+                                <div className="fee-tooltip-wrap">
+
+                                    <div className="vk-feeno">
+                                        Professional fee only — GST & govt. fees
+
+                                        <button
+                                            className="vk-i"
+                                            type="button"
+                                            aria-label="Government fee breakdown"
+                                        >
+                                            <i className="bx bx-info-circle"></i>
+                                        </button>
+
+                                        {" "}extra
+
+                                        <span className="vk-tip" role="tooltip">
+                                            <h5>Govt. & statutory fees — billed at actuals</h5>
+
+                                            <ul>
+                                                <li>
+                                                    <span>Name reservation (MCA)</span>
+                                                    <span>~₹1,000</span>
+                                                </li>
+
+                                                <li>
+                                                    <span>Section 8 licence + SPICe+</span>
+                                                    <span>₹0*</span>
+                                                </li>
+
+                                                <li>
+                                                    <span>Stamp duty (MOA/AOA)</span>
+                                                    <span>state-based</span>
+                                                </li>
+
+                                                <li>
+                                                    <span>PAN & TAN issuance</span>
+                                                    <span>~₹131</span>
+                                                </li>
+
+                                                <li>
+                                                    <span>DSC (per director)</span>
+                                                    <span>~₹1,000–2,000</span>
+                                                </li>
+
+                                                <li>
+                                                    <span>12A / 80G filing</span>
+                                                    <span>₹0 (online)</span>
+                                                </li>
+                                            </ul>
+
+                                            <div className="note">
+                                                *Nil MCA fee for Section 8 companies. Final govt.
+                                                fees vary by state and are charged at actuals.
+                                                GST @ 18% applies on our professional fee.
+                                            </div>
+                                        </span>
+                                    </div>
+
+                                </div>
 
                             </div>
 
                         </div>
 
                         <hr />
+
+                        {/* Govt Fees Box */}
+
 
                         <div className="section-8-plus">
                             Everything in Basic, plus:
@@ -679,6 +737,7 @@ export default function Section8Page() {
                 </div>
 
             </section>
+
 
 
 
@@ -801,6 +860,8 @@ export default function Section8Page() {
                             <a href="pvt-ltd">Private Limited Company</a>
                             <a href="farmer-producer-company">Farmer-Producers Company</a>
                             <a href="section-8">Section 8 / NGO</a>
+                            <a href="Limited-Liability-Partnership">Limited Liability Partnership</a>
+                            <a href="section8-microfinance">Section 8 Microfinance</a>
                         </div>
                         <div className="col-6 col-lg-2">
                             <h5>Company</h5>

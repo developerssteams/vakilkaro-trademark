@@ -2,32 +2,32 @@
 
 import { useState } from "react";
 
-/* ---------------- data ---------------- */
+/* ---------------- Section 8 Microfinance DATA ---------------- */
 const STATS = [
-    { value: "10,000", pl: "+", label: "Companies Incorporated" },
-    { value: "14", pl: "", label: "Avg. Days to Incorporate" },
+    { value: "10,000", pl: "+", label: "Companies Registered" },
+    { value: "30", pl: "", label: "Avg. Days to Licence" },
     { value: "200", pl: "+", label: "CA / CS Experts" },
     { value: "98", pl: "%", label: "On-Time Filing Rate" },
 ];
 
 const BENEFITS = [
-    { ic: "bx-shield-quarter", t: "Limited Liability", p: "Your personal assets stay protected — liability is limited to the capital you invest in the company." },
-    { ic: "bx-trending-up", t: "Easy Fundraising", p: "VCs, angel investors and banks strongly prefer Pvt Ltd companies, making capital easier to raise." },
-    { ic: "bx-buildings", t: "Separate Legal Entity", p: "The company can own property, open bank accounts and sue or be sued in its own name." },
-    { ic: "bx-medal", t: "Higher Credibility", p: "MCA registration and 'Pvt Ltd' status build instant trust with clients, vendors and partners." },
-    { ic: "bx-refresh", t: "Perpetual Succession", p: "The company exists independently — its life is unaffected by changes in ownership or directors." },
-    { ic: "bx-rocket", t: "Startup India Benefits", p: "Eligible for tax holidays, easier compliance and government schemes under Startup India." },
+    { ic: "bx-shield-quarter", t: "No RBI Registration*", p: "Operate under the RBI's Section 8 exemption — no NBFC-MFI licence or prior approval for small-scale micro-lending." },
+    { ic: "bx-rupee", t: "No ₹5 Crore Capital", p: "The ₹5–10 crore net-owned-fund rule for NBFC-MFIs doesn't apply — start with nominal capital." },
+    { ic: "bx-buildings", t: "Separate Legal Entity", p: "A registered company that can lend, sign contracts and recover dues in its own name." },
+    { ic: "bx-medal", t: "High Credibility", p: "Not-for-profit status builds trust with banks, CSR funders, donors and borrowers." },
+    { ic: "bx-donate-heart", t: "Tax & CSR Benefits", p: "Eligible to apply for 12A/80G and to receive CSR funding and grants." },
+    { ic: "bx-check-shield", t: "Legal Recovery Rights", p: "Enforce loan agreements and pursue defaulters as a recognised, registered lender." },
 ];
 
 const IDEAL = [
-    { ic: "bx-bulb", t: "Startups", p: "Planning to raise funding from investors or VCs." },
-    { ic: "bx-store", t: "Growing SMEs", p: "Businesses scaling operations and adding partners." },
-    { ic: "bx-laptop", t: "Tech & SaaS", p: "Product companies needing ESOPs and equity structure." },
-    { ic: "bx-globe", t: "NRIs & Foreigners", p: "100% FDI allowed via the automatic route in most sectors." },
+    { ic: "bx-donate-heart", t: "NGOs & Social Entrepreneurs", p: "Extending financial inclusion to underserved communities." },
+    { ic: "bx-group", t: "SHG & JLG Promoters", p: "Lending to self-help and joint-liability groups." },
+    { ic: "bx-home-heart", t: "Women & Rural Lending", p: "Focused micro-credit for women and rural households." },
+    { ic: "bx-laptop", t: "Fintech & Startup Founders", p: "Building a compliant micro-lending model at low cost." },
 ];
 
 const DOCS_MEMBERS = [
-    "PAN card of all directors / shareholders",
+    "PAN card of all directors / members",
     "Aadhaar / Voter ID / Passport (ID proof)",
     "Latest passport-size photographs",
     "Email ID & mobile number",
@@ -38,69 +38,69 @@ const DOCS_OFFICE = [
     "Rent agreement (if the office is rented)",
     "No-Objection Certificate (NOC) from the owner",
     "Property ownership proof (if self-owned)",
-    "Proposed company name & business objectives",
+    "Proposed name & microfinance objects / vision",
 ];
 
 const PROCESS = [
-    { day: "Day 1–2", t: "Consultation & DSC", p: "Free expert call, document collection, and Digital Signature Certificates for directors." },
-    { day: "Day 3–4", t: "Name Approval", p: "We check availability and reserve your unique company name via SPICe+ Part A." },
-    { day: "Day 5–9", t: "MoA, AoA & Filing", p: "Draft the MoA & AoA and submit the integrated SPICe+ form with the MCA." },
-    { day: "Day 10–14", t: "Incorporation Certificate", p: "The RoC reviews and issues your Certificate of Incorporation, with PAN & TAN." },
-    { day: "Post-reg", t: "Bank A/C & GST", p: "Open your company bank account, register for GST, and start compliance support." },
-    { day: "Done!", t: "You're Incorporated", p: "Your Pvt Ltd company is live and ready to do business legally across India.", done: true },
+    { day: "Day 1–3", t: "Consultation & DSC", p: "Viability check, document collection, and Digital Signature Certificates for directors." },
+    { day: "Day 4–7", t: "Name & DIN", p: "Reserve a unique name (no 'Ltd' suffix) and obtain DINs for the directors." },
+    { day: "Day 8–20", t: "MoA, AoA & Section 8 Licence", p: "Draft the microfinance & relevant objects and file the Section 8 licence application for you." },
+    { day: "Day 21–35", t: "Incorporation Certificate", p: "After the licence, the RoC issues your Certificate of Incorporation with PAN & TAN." },
+    { day: "Post-reg", t: "NITI Aayog, Software & Agreements", p: "Set up NGO Darpan, MSME, Finmitra software and loan agreements to start lending." },
+    { day: "Done!", t: "You're Ready to Lend", p: "Your Section 8 microfinance company is incorporated, licensed and operational.", done: true },
 ];
 
 const PLANS = [
-    { tier: "Consult", price: "999", features: ["1-on-1 call with a company-registration expert", "Personalised structure advice: Pvt Ltd / OPC / LLP", "Full document checklist + clear cost breakdown", "Fee fully adjusted if you proceed with any plan"] },
-    { tier: "Basic", price: "2,999", features: ["Private Limited incorporation with the MCA", "Drafting & filing by experienced professionals", "2 Digital Signature Certificates (DSC)", "2 Director Identification Numbers (DIN)", "Company name approval", "MOA & AOA drafting", "Company PAN & TAN", "MCA processing & CIN allotment"] },
-    { tier: "Smart", price: "7,999", badge: "MOST POPULAR", features: ["GST registration", "INC-20A commencement of business filing", "ESI & PF registration", "1st Board Resolution documentation", "Consent letter drafting", "1 Trademark application — protect your brand", "A dedicated relationship manager"] },
-    { tier: "Master", price: "16,999", features: ["Appointment of the Auditor", "MCA annual return filing + DIR-3 Director KYC", "GST return filing for 12 months", "Basic accounting setup", "Compliance calendar with deadline reminders"] },
-    { tier: "Premium", price: "29,999", active: true, features: ["Company Income Tax Return filing", "Financial statements preparation", "Year-round compliance management", "Quarterly business review with an expert", "Priority support"] },
+    { tier: "Consult", price: "999", features: ["Eligibility & viability assessment for Section 8 microfinance", "Licence, objects, capital & compliance roadmap", "Document checklist + transparent cost break-up", "Fee fully adjusted if you proceed with any package"] },
+    { tier: "Licence", price: "90,000", features: ["Section 8 company incorporation (DSC, DIN, name, MoA/AoA, PAN & TAN, COI)", "Microfinance & relevant objects drafted into the MoA", "NITI Aayog (NGO Darpan) registration", "Guidance on RBI micro-lending limits & pricing norms"] },
+    { tier: "Launch", price: "1,25,000", badge: "MOST POPULAR", features: ["Loan Agreements Bundle — legally vetted templates", "Growth Agreements Bundle — investor / lender / partner templates", "Board Resolution & Policy pack", "MSME / Udyam registration", "1 Trademark application — protect your brand (govt class fee extra)", "GST registration certificate", "A dedicated relationship manager"] },
+    { tier: "Operate", price: "1,50,000", features: ["Annual compliance management — board meetings, minutes & registers", "ROC annual filings & director KYC", "GST return filing", "Compliance calendar with deadline reminders", "Priority support"] },
+    { tier: "Fintech", price: "1,90,000", active: true, features: ["Finmitra microfinance software — 1-year licence", "Loan-management & reporting setup on Finmitra", "Year-round legal & regulatory support", "Quarterly business review with an expert", "Priority on-call support"] },
 ];
 
 const COMPARE = [
-    ["Governing Law", "Companies Act, 2013", "LLP Act, 2008", "Companies Act, 2013", "Partnership Act, 1932"],
-    ["Min. Members", "2 directors / 2 shareholders", "2 partners", "1 member + 1 nominee", "2 partners"],
-    ["Limited Liability", "Yes", "Yes", "Yes", "No"],
-    ["Fundraising (VC / Angel)", "Best suited", "Difficult", "Limited", "Not possible"],
-    ["Credibility", "Highest", "High", "Moderate", "Low"],
-    ["Compliance", "Moderate–High", "Low", "Moderate", "Low"],
-    ["Ideal For", "Startups & scale-ups", "Professional firms", "Solo founders", "Small local business"],
+    ["RBI Registration", "Not required (exempt)*", "Mandatory", "Not required", "Not required"],
+    ["Min. Capital", "Nil", "₹5 crore (NOF)", "₹10 lakh", "Varies"],
+    ["Profit Motive", "Not-for-profit", "For-profit", "For-profit", "Member benefit"],
+    ["Setup Cost & Time", "Low–moderate", "High", "Moderate", "Moderate"],
+    ["Credibility for CSR / Grants", "High", "High", "Low", "Moderate"],
+    ["Public Deposits", "Not allowed", "Not allowed", "Allowed (members)", "Allowed (members)"],
+    ["Ideal For", "Financial-inclusion founders", "Large-scale lenders", "Member savings & lending", "Local cooperatives"],
 ];
 
 const WHY = [
-    { ic: "bx-user-voice", t: "Dedicated Experts", p: "A personal CA/CS manager from start to incorporation." },
-    { ic: "bx-rupee", t: "Transparent Pricing", p: "Flat fees, government charges at actuals — zero surprises." },
-    { ic: "bx-time-five", t: "On-Time Filing", p: "Most companies incorporated in 7–14 working days." },
-    { ic: "bx-support", t: "Lifetime Support", p: "Compliance, GST and bookkeeping help after you register." },
+    { ic: "bx-user-voice", t: "Dedicated Experts", p: "A personal CA/CS manager from incorporation to licence." },
+    { ic: "bx-rupee", t: "Transparent Pricing", p: "Flat professional fee, government charges at actuals." },
+    { ic: "bx-been-here", t: "End-to-End Filing", p: "We handle the entire Section 8 licence process for you." },
+    { ic: "bx-support", t: "Software + Compliance", p: "Finmitra software, agreements and year-round compliance support." },
 ];
 
 const TESTIMONIALS = [
-    { av: "AM", n: "Arjun Mehta", r: "SaaS Startup, Bengaluru", q: "Incorporated our startup in just 11 days. The team handled DSC, name approval and GST end to end — completely hassle-free." },
-    { av: "PK", n: "Priya Kapoor", r: "D2C Brand, Jaipur", q: "Transparent pricing and a dedicated CS manager who answered every doubt. Highly recommend Vakilkaro for Pvt Ltd registration." },
-    { av: "RV", n: "Rahul Verma", r: "NRI Founder, Dubai", q: "As an NRI I expected it to be complex, but everything was done online with video verification. Got my COI without any trips to India." },
+    { av: "AK", n: "Anil Kumar", r: "Founder, Lucknow", q: "Got our Section 8 microfinance licence without any RBI hassle. The team handled the entire Section 8 licence process end to end." },
+    { av: "MJ", n: "Meena Joshi", r: "Microfinance Director, Indore", q: "The Finmitra software and ready loan agreements meant we started lending to SHGs within days of incorporation." },
+    { av: "SR", n: "Suresh Reddy", r: "Social Entrepreneur, Hyderabad", q: "Transparent package pricing and a manager who explained every cost. Highly recommend for anyone starting micro-lending." },
 ];
 
 const FAQS = [
-    { q: "How long does Pvt Ltd registration take?", a: "With complete and verified documents, registration is typically completed in 7–14 working days, depending on MCA and RoC processing times." },
-    { q: "How many people are required to start a Pvt Ltd?", a: "A minimum of 2 directors and 2 shareholders (they can be the same individuals). At least one director must be a resident of India." },
-    { q: "Is there a minimum capital requirement?", a: "No. You can start a Private Limited Company with as little as ₹1 in paid-up capital and increase your authorised capital later as your business grows." },
-    { q: "What is included in your registration fee?", a: "Our packages include name approval, DSC & DIN for directors, MoA/AoA drafting, the SPICe+ filing, Certificate of Incorporation, and PAN & TAN. Government fees and stamp duty are billed at actuals." },
-    { q: "Can NRIs or foreign nationals register a company in India?", a: "Yes. NRIs and foreign nationals can own up to 100% of a Pvt Ltd company in most sectors via the automatic FDI route. At least one director must be an Indian resident, and the process can be completed online." },
-    { q: "What compliance is required after incorporation?", a: "Annual filings (AOC-4, MGT-7), board meetings, an AGM, statutory audit, income tax return and director KYC. Our Master and Premium plans handle all of this for you." },
+    { q: "Do I need RBI approval for a Section 8 microfinance company?", a: "No prior RBI approval or NBFC-MFI registration is needed for small-scale micro-lending, under the RBI's Master Circular dated 1 July 2015 (exemption from Sections 45-IA, 45-IB & 45-IC), provided you do not accept public deposits and stay within micro-lending limits. Companies that grow to an asset size of ₹100 crore or more must register as an NBFC-MFI." },
+    { q: "Is there a minimum capital requirement?", a: "No. Unlike the ₹5–10 crore net owned fund required for an NBFC-MFI, a Section 8 microfinance company has no statutory minimum capital — you can start with nominal capital." },
+    { q: "How long does registration take?", a: "Typically 30–45 working days, since the Section 8 licence and the related filings add time over a standard company incorporation." },
+    { q: "How much can we lend, and to whom?", a: "Collateral-free micro-loans to low-income households (broadly, annual household income up to ₹3 lakh), within the RBI's microfinance framework. You must follow the RBI's pricing and interest-rate guidelines and cannot accept public deposits." },
+    { q: "Can the company earn income or profit?", a: "It can earn interest income, but as a not-for-profit Section 8 company the surplus must be reinvested toward its objects — profits cannot be distributed as dividends to members." },
+    { q: "What does the ₹90,000 registration fee include?", a: "Section 8 incorporation, microfinance & relevant objects in the MoA, the Section 8 licence, plus NITI Aayog registration. Government fees and GST are charged separately. Agreements, trademark, compliance and the Finmitra software are available in the higher packages." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Private%20Limited%20Company";
+const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Section%208%20Microfinance%20Company";
 
 /* ---------------- component ---------------- */
-export default function PvtLtdPage() {
+export default function Section8MicrofinancePage() {
     const [navOpen, setNavOpen] = useState(false);
     const [openFaq, setOpenFaq] = useState(0);
     const [showLogin, setShowLogin] = useState(false);
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(2);
 
-    const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Private Limited Company Registration", consent: true });
+    const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Section 8 Microfinance Company Registration", consent: true });
     const [errors, setErrors] = useState({});
     const [done, setDone] = useState(null);
 
@@ -118,7 +118,7 @@ export default function PvtLtdPage() {
         if (Object.keys(err).length) return;
         setDone({
             firstName: form.name.trim().split(" ")[0] || "there",
-            refId: "VK-PVT-" + Math.floor(10000 + Math.random() * 89999),
+            refId: "VK-MF-" + Math.floor(10000 + Math.random() * 89999),
         });
     }
     function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
@@ -180,9 +180,9 @@ export default function PvtLtdPage() {
                     <div className="row align-items-stretch g-4">
                         <div className="col-lg-6 d-flex flex-column">
                             <div className="h2head pt-2 pt-lg-4">
-                                <div className="eyebrow">Private Limited Company · Pvt Ltd Registration</div>
-                                <h1>Register Your <span className="g">Private Limited Company</span> 100% Online</h1>
-                                <p className="h2sub">100% online · Expert CA/CS support · DSC, DIN, PAN, TAN & GST included · incorporation in 7–14 working days.</p>
+                                <div className="eyebrow">Section 8 Microfinance · RBI-Exempt Micro-Lending Licence</div>
+                                <h1>Register Your <span className="g">Section 8 Microfinance Company</span> 100% Online</h1>
+                                <p className="h2sub">Start micro-lending without RBI / NBFC-MFI registration or ₹5 crore capital · expert CA/CS support · end-to-end Section 8 licence &amp; registration.</p>
                             </div>
                             <div className="h2photo flex-grow-1">
                                 <div className="ph-frame">
@@ -208,9 +208,9 @@ export default function PvtLtdPage() {
                                 <span className="ff-pill">Instant Rewards</span>
                                 {!done ? (
                                     <>
-                                        <h3 className="ff-title">Need Help with Company Registration?</h3>
+                                        <h3 className="ff-title">Need Help with Microfinance Registration?</h3>
                                         <p className="ff-sub">Fill up the form below — our expert will call you back</p>
-                                        <div className="live"><span className="dot" /> 17 founders enquired in the last 24 hrs</div>
+                                        <div className="live"><span className="dot" /> 17 promoters enquired in the last 24 hrs</div>
                                         <form onSubmit={submit} noValidate>
                                             <div className="mb-2">
                                                 <label className="form-label">Full Name <span className="req">*</span></label>
@@ -233,11 +233,11 @@ export default function PvtLtdPage() {
                                             <div className="mb-2">
                                                 <label className="form-label">Service Required</label>
                                                 <select className="form-select" name="service" value={form.service} onChange={update}>
-                                                    <option>Private Limited Company Registration</option>
-                                                    <option>One Person Company (OPC)</option>
-                                                    <option>LLP Registration</option>
-                                                    <option>Startup India Registration</option>
-                                                    <option>GST + Compliance Package</option>
+                                                    <option>Section 8 Microfinance Company Registration</option>
+                                                    <option>Microfinance Software (Finmitra)</option>
+                                                    <option>Loan & Growth Agreements Bundle</option>
+                                                    <option>Microfinance Compliance Package</option>
+                                                    <option>Trademark Registration</option>
                                                     <option>Other Legal / Tax Service</option>
                                                 </select>
                                             </div>
@@ -256,13 +256,13 @@ export default function PvtLtdPage() {
                                             <span><i className="bx bx-time-five" /> 30-min Callback</span>
                                             <span><i className="bx bx-shield-quarter" /> No Spam</span>
                                         </div>
-                                        <p className="ff-price">Incorporation from <b>₹2,999</b> professional fee <span style={{ color: "var(--green)", fontWeight: 700 }}>· + govt fees & GST extra</span></p>
+                                        <p className="ff-price">Registration from <b>₹90,000</b> <span style={{ color: "var(--green)", fontWeight: 700 }}>· + GST &amp; govt fees extra</span></p>
                                     </>
                                 ) : (
                                     <div className="ff-success">
                                         <div className="ok"><i className="bx bx-check" /></div>
                                         <h3>Thank you, {done.firstName}!</h3>
-                                        <p>Your enquiry is received. A Vakilkaro expert will call you within <b>30 minutes</b> to get your company registered.</p>
+                                        <p>Your enquiry is received. A Vakilkaro expert will call you within <b>30 minutes</b> to get your microfinance company registered.</p>
                                         <a className="btn btn-wa2" href={WA} target="_blank" rel="noopener noreferrer"><i className="bx bxl-whatsapp" /> Chat now on WhatsApp</a>
                                         <p className="mt-3 mb-0" style={{ fontSize: 12.5, color: "var(--faint)" }}>Reference ID: <b>{done.refId}</b></p>
                                     </div>
@@ -279,7 +279,7 @@ export default function PvtLtdPage() {
                     <div className="row align-items-center g-4 py-5">
                         <div className="col-lg-7">
                             <h2 className="serif">Start your Vakilkaro journey<br />and earn from day one</h2>
-                            <p className="sub">Every new customer gets a head start with bonus VakilCoins — redeemable as a cash discount on any booking, including your company registration.</p>
+                            <p className="sub">Every new customer gets a head start with bonus VakilCoins — redeemable as a cash discount on any booking, including your microfinance company registration.</p>
                             <div className="coin-step"><div className="n">1</div><div className="tx"><b>Create your profile</b> <span>— earn 200 welcome coins instantly</span></div></div>
                             <div className="coin-step"><div className="n">2</div><div className="tx"><b>Complete your first booking</b> <span>— earn coins on your spend + 500 completion bonus</span></div></div>
                             <div className="coin-step"><div className="n">3</div><div className="tx"><b>Refer a business friend</b> <span>— earn 1,000 coins when they pay their first order</span></div></div>
@@ -312,18 +312,18 @@ export default function PvtLtdPage() {
                 </div>
             </div>
 
-            {/* ===== ABOUT (Pvt Ltd at a glance) ===== */}
+            {/* ===== ABOUT ===== */}
             <section className="section" id="about">
                 <div className="container">
                     <div className="row align-items-center g-5">
                         <div className="col-lg">
                             <div className="glance">
-                                <h4>Pvt Ltd at a glance</h4>
-                                <p>Built for credibility, funding and scale — the structure serious founders choose.</p>
+                                <h4>Section 8 Microfinance at a glance</h4>
+                                <p>Start regulated micro-lending the low-capital, RBI-exempt way — built for financial-inclusion founders.</p>
                                 <div className="glance-row">
+                                    <div><b>No RBI</b><small>Prior approval needed*</small></div>
+                                    <div><b>₹0</b><small>Min. capital</small></div>
                                     <div><b>2</b><small>Min. directors</small></div>
-                                    <div><b>₹1</b><small>Min. capital</small></div>
-                                    <div><b>7–14</b><small>Working days</small></div>
                                 </div>
                             </div>
                         </div>
@@ -335,9 +335,9 @@ export default function PvtLtdPage() {
             <section className="section section-alt" id="benefits">
                 <div className="container">
                     <div className="sec-head">
-                        <div className="eyebrow">Why register as Pvt Ltd</div>
-                        <h2>Benefits of a Private Limited Company</h2>
-                        <p>The structure that maximises credibility, protection and funding potential for your business.</p>
+                        <div className="eyebrow">Why the Section 8 route</div>
+                        <h2>Benefits of a Section 8 Microfinance Company</h2>
+                        <p>The fastest, lowest-cost legal route to start micro-lending for financial inclusion.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {BENEFITS.map((b) => (
@@ -354,8 +354,8 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">Is it right for you?</div>
-                        <h2>Who Should Register a Pvt Ltd?</h2>
-                        <p>A Private Limited Company suits founders who want to grow, raise money and build credibility.</p>
+                        <h2>Who Should Register a Microfinance Company?</h2>
+                        <p>The Section 8 route suits mission-driven lenders starting small and scaling responsibly.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
                         {IDEAL.map((i) => (
@@ -373,12 +373,12 @@ export default function PvtLtdPage() {
                     <div className="sec-head">
                         <div className="eyebrow">Keep these ready</div>
                         <h2>Documents Required</h2>
-                        <p>A simple, well-organised checklist — our experts verify everything before filing your SPICe+ form.</p>
+                        <p>A simple checklist — our experts verify everything before filing your Section 8 licence application.</p>
                     </div>
                     <div className="row g-4">
                         <div className="col-lg-6">
                             <div className="dcol">
-                                <h4><i className="bx bx-id-card" /> For Directors & Shareholders</h4>
+                                <h4><i className="bx bx-id-card" /> For Directors &amp; Members</h4>
                                 <ul>{DOCS_MEMBERS.map((d) => <li key={d}><i className="bx bx-check" /> {d}</li>)}</ul>
                             </div>
                         </div>
@@ -398,7 +398,7 @@ export default function PvtLtdPage() {
                     <div className="sec-head">
                         <div className="eyebrow">Simple & transparent</div>
                         <h2>The Registration Process</h2>
-                        <p>End-to-end on the MCA's integrated SPICe+ form. A dedicated manager updates you at every stage.</p>
+                        <p>From incorporation to the Section 8 licence — a dedicated manager handles every filing at every stage.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {PROCESS.map((s, idx) => (
@@ -419,9 +419,9 @@ export default function PvtLtdPage() {
             <section className="section-8" id="pricing">
                 <div className="container">
                     <div className="section-8-header text-center">
-                        <span className="section-8-eyebrow">NO HIDDEN CHARGES</span>
-                        <h2>Our Plans</h2>
-                        <p>Pick a plan that matches your stage. Each price is our professional fee — clear and fixed. Government fees & GST are charged separately, only as applicable.</p>
+                        <span className="section-8-eyebrow">TRANSPARENT PACKAGES</span>
+                        <h2>Our Microfinance Packages</h2>
+                        <p>Start with the licence, then add the tools you need to lend. Each price is our professional fee — GST and government fees are charged separately, only as applicable.</p>
                     </div>
 
                     <div className="row g-3 section-8-tabs">
@@ -451,63 +451,28 @@ export default function PvtLtdPage() {
                             </div>
                             <div className="col-lg-6 text-lg-end mt-3 mt-lg-0">
                                 <div className="fee-tooltip-wrap">
-
                                     <div className="vk-feeno">
-                                        Professional fee only — GST & govt. fees
-
-                                        <button
-                                            className="vk-i"
-                                            type="button"
-                                            aria-label="Government fee breakdown"
-                                        >
+                                        Professional fee — GST extra; govt. fees at actuals
+                                        <button className="vk-i" type="button" aria-label="Fee break-up">
                                             <i className="bx bx-info-circle"></i>
                                         </button>
-
-                                        {" "}extra
-
                                         <span className="vk-tip" role="tooltip">
                                             <h5>Govt. & statutory fees — billed at actuals</h5>
-
                                             <ul>
-                                                <li>
-                                                    <span>Name reservation (MCA)</span>
-                                                    <span>~₹1,000</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>SPICe+ incorporation</span>
-                                                    <span>₹0*</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>Stamp duty (MOA/AOA)</span>
-                                                    <span>state-based</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>PAN & TAN issuance</span>
-                                                    <span>~₹131</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>DSC (per director)</span>
-                                                    <span>~₹1,000–2,000</span>
-                                                </li>
-
-
+                                                <li><span>Name reservation (MCA)</span><span>~₹1,000</span></li>
+                                                <li><span>Section 8 licence & filing</span><span>at actuals</span></li>
+                                                <li><span>Stamp duty (MoA/AoA)</span><span>state-based</span></li>
+                                                <li><span>PAN & TAN</span><span>~₹131</span></li>
+                                                <li><span>DSC (per director)</span><span>~₹1,000–2,000</span></li>
                                             </ul>
-
-                                            <div className="note">
-                                                *Nil MCA fee for authorized capital up to ₹15 lakh. Final govt. fees vary by state & capital and are charged at actuals. GST @ 18% applies on our professional fee.
-                                            </div>
+                                            <div className="note">Trademark government class fee is billed separately at actuals. GST @ 18% applies on our professional fee.</div>
                                         </span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                         <hr />
-                        <div className="section-8-plus">Everything in Basic, plus:</div>
+                        <div className="section-8-plus">Everything in {activePlan > 0 ? PLANS[activePlan - 1].tier : "Basic"}, plus:</div>
                         <div className="row mt-4">
                             {PLANS[activePlan].features.map((item, i) => (
                                 <div className="col-lg-4 col-md-6 mb-3" key={i}>
@@ -520,14 +485,14 @@ export default function PvtLtdPage() {
                         </div>
                         <div className="section-8-btns">
                             <a href="#enquiry" className="btn section-8-register-btn">
-                                <i className="bx bx-paper-plane"></i> Register Now
+                                <i className="bx bx-paper-plane"></i> Get This Package
                             </a>
                             <a href="#enquiry" className="btn section-8-callback-btn">
                                 <i className="bx bx-phone-call"></i> Request a Callback
                             </a>
                         </div>
                     </div>
-                    <div className="section-8-note">★ = exclusive value-adds most providers don't include.</div>
+                    <div className="section-8-note">★ = exclusive value-adds & included extras most providers bill separately.</div>
                 </div>
             </section>
 
@@ -535,14 +500,14 @@ export default function PvtLtdPage() {
             <section className="section" id="compare">
                 <div className="container">
                     <div className="sec-head">
-                        <div className="eyebrow">Choose the right structure</div>
-                        <h2>Pvt Ltd vs LLP vs OPC vs Partnership</h2>
-                        <p>How the popular business structures in India compare for founders.</p>
+                        <div className="eyebrow">Choose the right route</div>
+                        <h2>Section 8 Microfinance vs NBFC-MFI vs Nidhi vs Co-operative</h2>
+                        <p>How the routes to start micro-lending in India compare for new founders.</p>
                     </div>
                     <div className="table-responsive">
                         <table className="table table-bordered cmp-table align-middle mb-0">
                             <thead>
-                                <tr><th>Parameter</th><th className="hl">Private Limited</th><th>LLP</th><th>OPC</th><th>Partnership</th></tr>
+                                <tr><th>Parameter</th><th className="hl">Section 8 Microfinance</th><th>NBFC-MFI</th><th>Nidhi Company</th><th>Co-operative</th></tr>
                             </thead>
                             <tbody>
                                 {COMPARE.map((row) => (
@@ -556,6 +521,9 @@ export default function PvtLtdPage() {
                                 ))}
                             </tbody>
                         </table>
+                        <p style={{ fontSize: 12.5, color: "var(--faint)", marginTop: 14, lineHeight: 1.55 }}>
+                            *No prior RBI approval is needed for small-scale Section 8 micro-lending under the RBI exemption (Master Circular, 1 July 2015), subject to not accepting public deposits and following RBI pricing norms. Not-for-profit microfinance companies with an asset size of ₹100 crore or more must register as an NBFC-MFI.
+                        </p>
                     </div>
                 </div>
             </section>
@@ -565,7 +533,7 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">The Vakilkaro advantage</div>
-                        <h2>Why 10,000+ Founders Choose Us</h2>
+                        <h2>Why Microfinance Founders Choose Us</h2>
                     </div>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
                         {WHY.map((w) => (
@@ -580,7 +548,7 @@ export default function PvtLtdPage() {
             {/* ===== TESTIMONIALS ===== */}
             <section className="section" id="reviews">
                 <div className="container">
-                    <div className="sec-head"><div className="eyebrow">Loved by founders</div><h2>What Our Clients Say</h2></div>
+                    <div className="sec-head"><div className="eyebrow">Loved by microfinance founders</div><h2>What Our Clients Say</h2></div>
                     <div className="row row-cols-1 row-cols-md-3 g-4">
                         {TESTIMONIALS.map((t) => (
                             <div className="col" key={t.n}>
@@ -614,8 +582,8 @@ export default function PvtLtdPage() {
             <section className="section">
                 <div className="container">
                     <div className="ctaband">
-                        <h2>Ready to register your Private Limited Company?</h2>
-                        <p>Get a free consultation with a Vakilkaro expert today — incorporation in as little as 7 working days.</p>
+                        <h2>Ready to start your Section 8 Microfinance Company?</h2>
+                        <p>Get a free consultation with a Vakilkaro microfinance expert — licence, software and compliance, all in one place.</p>
                         <div className="cta-row">
                             <a className="btn btn-gold" href="#enquiry"><i className="bx bx-paper-plane" /> Get Started Now</a>
                             <a className="btn btn-ghost2" href="tel:+919828123489" style={{ borderColor: "rgba(255,255,255,.3)", color: "#fff" }}><i className="bx bxs-phone" /> Call an Expert</a>
@@ -635,18 +603,17 @@ export default function PvtLtdPage() {
                                 style={{
                                     height: "50px",
                                     width: "auto",
-
                                     display: "block"
                                 }}
                             />
-                            <p className="about-f mt-3">India's trusted legaltech partner for company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
+                            <p className="about-f mt-3">India's trusted legaltech partner for company, microfinance, NGO and tax registrations — making compliance simple, transparent and fast.</p>
                         </div>
                         <div className="col-6 col-lg-3">
                             <h5>Services</h5>
                             <a href="/">Trademark Registration</a>
                             <a href="pvt-ltd">Private Limited Company</a>
-                            <a href="farmer-producer-company">Farmer-Producers Company</a>
-                            <a href="section-8">Section 8 / NGO</a>
+                            <a href="section-8-microfinance">Section 8 Microfinance</a>
+                            <a href="farmer-producer-company">Farmer Producer Company</a>
                             <a href="Limited-Liability-Partnership">Limited Liability Partnership</a>
                             <a href="section8-microfinance">Section 8 Microfinance</a>
                         </div>
@@ -719,5 +686,3 @@ export default function PvtLtdPage() {
         </>
     );
 }
-
-

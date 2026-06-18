@@ -1732,6 +1732,7 @@ a {
   padding: 3px 12px;
   border-radius: 30px;
 }
+
 @media (max-width: 768px) {
   .section-8-badge {
     font-size: 8px;
@@ -1876,5 +1877,148 @@ a {
 
   .section-8-btns .btn {
     width: 100%;
+  }
+}
+
+
+
+
+.vk-feeno {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff8df;
+  border: 1px solid #e6c34f;
+
+  color: #8a6500;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vk-i {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0 2px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #c79500;
+  font-size: 16px;
+}
+
+.vk-tip {
+  position: absolute;
+  top: 52px;
+  right: 0;
+
+  width: 340px;
+
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 16px;
+
+  padding: 16px 18px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(8px);
+  transition: .25s ease;
+
+  z-index: 999;
+}
+
+/* Hover pe show */
+.vk-feeno:hover .vk-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.vk-tip::before {
+  content: "";
+  position: absolute;
+
+  top: -8px;
+  right: 30px;
+
+  width: 16px;
+  height: 16px;
+
+  background: #fff;
+
+  border-left: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
+
+  transform: rotate(45deg);
+}
+
+.vk-tip h5 {
+  margin: 0 0 15px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+.vk-tip ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vk-tip li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 12px;
+  padding: 6px 0;
+
+  font-size: 14px;
+  color: #222;
+}
+
+.vk-tip li span:last-child {
+  color: #c79500;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.vk-tip .note {
+  margin-top: 14px;
+  padding-top: 14px;
+
+  border-top: 1px solid #eee;
+
+  font-size: 12px;
+  line-height: 1.5;
+  color: #777;
+}
+
+/* Mobile */
+@media (max-width:768px) {
+
+  .vk-tip {
+    width: 290px;
+    right: -20px;
+  }
+
+  .vk-tip li {
+    font-size: 13px;
+  }
+
+  .vk-feeno {
+    font-size: 13px;
+    padding: 8px 14px;
   }
 }

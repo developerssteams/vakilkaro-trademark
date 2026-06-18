@@ -677,6 +677,8 @@ export default function Page() {
               <a href="pvt-ltd">Private Limited Company</a>
               <a href="farmer-producer-company">Farmer-Producers Company</a>
               <a href="section-8">Section 8 / NGO</a>
+              <a href="Limited-Liability-Partnership">Limited Liability Partnership</a>
+              <a href="section8-microfinance">Section 8 Microfinance</a>
             </div>
             <div className="col-6 col-lg-2">
               <h5>Company</h5>

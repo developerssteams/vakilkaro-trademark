@@ -2,105 +2,105 @@
 
 import { useState } from "react";
 
-/* ---------------- data ---------------- */
+/* ---------------- LLP DATA (from your LLP page) ---------------- */
 const STATS = [
-    { value: "10,000", pl: "+", label: "Companies Incorporated" },
-    { value: "14", pl: "", label: "Avg. Days to Incorporate" },
+    { value: "10,000", pl: "+", label: "Businesses Registered" },
+    { value: "12", pl: "", label: "Avg. Days to Incorporate" },
     { value: "200", pl: "+", label: "CA / CS Experts" },
     { value: "98", pl: "%", label: "On-Time Filing Rate" },
 ];
 
 const BENEFITS = [
-    { ic: "bx-shield-quarter", t: "Limited Liability", p: "Your personal assets stay protected — liability is limited to the capital you invest in the company." },
-    { ic: "bx-trending-up", t: "Easy Fundraising", p: "VCs, angel investors and banks strongly prefer Pvt Ltd companies, making capital easier to raise." },
-    { ic: "bx-buildings", t: "Separate Legal Entity", p: "The company can own property, open bank accounts and sue or be sued in its own name." },
-    { ic: "bx-medal", t: "Higher Credibility", p: "MCA registration and 'Pvt Ltd' status build instant trust with clients, vendors and partners." },
-    { ic: "bx-refresh", t: "Perpetual Succession", p: "The company exists independently — its life is unaffected by changes in ownership or directors." },
-    { ic: "bx-rocket", t: "Startup India Benefits", p: "Eligible for tax holidays, easier compliance and government schemes under Startup India." },
+    { ic: "bx-shield-quarter", t: "Limited Liability", p: "Partners' personal assets stay protected — liability is limited to their agreed contribution." },
+    { ic: "bx-rupee", t: "No Minimum Capital", p: "Start with any amount of capital contribution — there is no statutory minimum." },
+    { ic: "bx-buildings", t: "Separate Legal Entity", p: "The LLP owns assets, signs contracts and can sue or be sued in its own name." },
+    { ic: "bx-check-shield", t: "Lower Compliance", p: "Fewer filings and lower running costs than a private limited company." },
+    { ic: "bx-coin-stack", t: "No Dividend Tax", p: "Profit shared with partners is tax-free in their hands — no dividend distribution tax." },
+    { ic: "bx-slider-alt", t: "Flexible Structure", p: "Rights, duties and profit-sharing are set freely through the LLP agreement." },
 ];
 
 const IDEAL = [
-    { ic: "bx-bulb", t: "Startups", p: "Planning to raise funding from investors or VCs." },
-    { ic: "bx-store", t: "Growing SMEs", p: "Businesses scaling operations and adding partners." },
-    { ic: "bx-laptop", t: "Tech & SaaS", p: "Product companies needing ESOPs and equity structure." },
-    { ic: "bx-globe", t: "NRIs & Foreigners", p: "100% FDI allowed via the automatic route in most sectors." },
+    { ic: "bx-briefcase-alt", t: "Professional Firms", p: "CAs, CSs, lawyers, architects & consultants." },
+    { ic: "bx-store", t: "Small & Medium Businesses", p: "Service and trading firms wanting a credible structure." },
+    { ic: "bx-rocket", t: "Startups (Not VC-Funded)", p: "Founders not raising equity or venture capital." },
+    { ic: "bx-group", t: "Family & Joint Ventures", p: "Family businesses and partner-run ventures." },
 ];
 
 const DOCS_MEMBERS = [
-    "PAN card of all directors / shareholders",
+    "PAN card of all partners",
     "Aadhaar / Voter ID / Passport (ID proof)",
     "Latest passport-size photographs",
-    "Email ID & mobile number",
     "Bank statement / utility bill, not older than 2 months",
+    "Email ID & mobile number",
 ];
 const DOCS_OFFICE = [
     "Recent electricity / utility bill of the premises",
     "Rent agreement (if the office is rented)",
     "No-Objection Certificate (NOC) from the owner",
     "Property ownership proof (if self-owned)",
-    "Proposed company name & business objectives",
+    "Proposed LLP name & business activity",
 ];
 
 const PROCESS = [
-    { day: "Day 1–2", t: "Consultation & DSC", p: "Free expert call, document collection, and Digital Signature Certificates for directors." },
-    { day: "Day 3–4", t: "Name Approval", p: "We check availability and reserve your unique company name via SPICe+ Part A." },
-    { day: "Day 5–9", t: "MoA, AoA & Filing", p: "Draft the MoA & AoA and submit the integrated SPICe+ form with the MCA." },
-    { day: "Day 10–14", t: "Incorporation Certificate", p: "The RoC reviews and issues your Certificate of Incorporation, with PAN & TAN." },
-    { day: "Post-reg", t: "Bank A/C & GST", p: "Open your company bank account, register for GST, and start compliance support." },
-    { day: "Done!", t: "You're Incorporated", p: "Your Pvt Ltd company is live and ready to do business legally across India.", done: true },
+    { day: "Day 1–2", t: "Consultation & DSC", p: "Free expert call, document collection, and Digital Signature Certificates for the partners." },
+    { day: "Day 3–5", t: "Name Approval", p: "Reserve a unique LLP name via the RUN-LLP service." },
+    { day: "Day 6–10", t: "FiLLiP Filing", p: "File the incorporation form with DPIN allotment for the designated partners." },
+    { day: "Day 10–14", t: "Incorporation Certificate", p: "The RoC issues your Certificate of Incorporation with LLPIN, PAN & TAN." },
+    { day: "Within 30 days", t: "LLP Agreement (Form 3)", p: "Draft and file the LLP agreement defining rights, duties and profit-sharing." },
+    { day: "Done!", t: "You're Incorporated", p: "Your LLP is live and ready to operate legally across India.", done: true },
 ];
 
 const PLANS = [
-    { tier: "Consult", price: "999", features: ["1-on-1 call with a company-registration expert", "Personalised structure advice: Pvt Ltd / OPC / LLP", "Full document checklist + clear cost breakdown", "Fee fully adjusted if you proceed with any plan"] },
-    { tier: "Basic", price: "2,999", features: ["Private Limited incorporation with the MCA", "Drafting & filing by experienced professionals", "2 Digital Signature Certificates (DSC)", "2 Director Identification Numbers (DIN)", "Company name approval", "MOA & AOA drafting", "Company PAN & TAN", "MCA processing & CIN allotment"] },
-    { tier: "Smart", price: "7,999", badge: "MOST POPULAR", features: ["GST registration", "INC-20A commencement of business filing", "ESI & PF registration", "1st Board Resolution documentation", "Consent letter drafting", "1 Trademark application — protect your brand", "A dedicated relationship manager"] },
-    { tier: "Master", price: "16,999", features: ["Appointment of the Auditor", "MCA annual return filing + DIR-3 Director KYC", "GST return filing for 12 months", "Basic accounting setup", "Compliance calendar with deadline reminders"] },
-    { tier: "Premium", price: "29,999", active: true, features: ["Company Income Tax Return filing", "Financial statements preparation", "Year-round compliance management", "Quarterly business review with an expert", "Priority support"] },
+    { tier: "Consult", price: "999", features: ["1-on-1 call with an LLP / business-structure expert", "Personalised advice: LLP / Pvt Ltd / Partnership", "Full document checklist + clear cost breakdown", "Fee fully adjusted if you proceed with any plan"] },
+    { tier: "Basic", price: "2,999", features: ["LLP incorporation with the MCA (FiLLiP)", "Drafting & filing by experienced professionals", "2 Digital Signature Certificates (DSC)", "2 Designated Partner Identification Numbers (DPIN)", "LLP name approval (RUN-LLP)", "LLP Agreement drafting & filing (Form 3)", "LLP PAN & TAN", "MCA processing & LLPIN allotment"] },
+    { tier: "Smart", price: "6,999", badge: "MOST POPULAR", features: ["Current account opening support", "MSME / Udyam registration", "GST registration", "1 Trademark application — protect your brand", "A dedicated relationship manager"] },
+    { tier: "Master", price: "13,999", features: ["Annual compliance: Form 11 (Annual Return)", "Form 8 (Statement of Account & Solvency)", "DPIN KYC for partners", "LLP Income Tax Return filing", "Financial statements preparation", "Basic accounting & bookkeeping guidance", "Compliance calendar with deadline reminders"] },
+    { tier: "Premium", price: "22,999", active: true, features: ["GST Returns filing — one complete financial year", "Year-round LLP compliance management", "ISO Certificate", "Quarterly business review with an expert", "Priority support"] },
 ];
 
 const COMPARE = [
-    ["Governing Law", "Companies Act, 2013", "LLP Act, 2008", "Companies Act, 2013", "Partnership Act, 1932"],
-    ["Min. Members", "2 directors / 2 shareholders", "2 partners", "1 member + 1 nominee", "2 partners"],
-    ["Limited Liability", "Yes", "Yes", "Yes", "No"],
-    ["Fundraising (VC / Angel)", "Best suited", "Difficult", "Limited", "Not possible"],
-    ["Credibility", "Highest", "High", "Moderate", "Low"],
-    ["Compliance", "Moderate–High", "Low", "Moderate", "Low"],
-    ["Ideal For", "Startups & scale-ups", "Professional firms", "Solo founders", "Small local business"],
+    ["Governing Law", "LLP Act, 2008", "Companies Act, 2013", "Partnership Act, 1932", "—"],
+    ["Min. Owners", "2 partners", "2 shareholders", "2 partners", "1 owner"],
+    ["Limited Liability", "Yes", "Yes", "No", "No"],
+    ["Separate Legal Entity", "Yes", "Yes", "No", "No"],
+    ["Compliance Burden", "Low–moderate", "High", "Low", "Minimal"],
+    ["Equity / VC Fundraising", "Limited", "Easy", "No", "No"],
+    ["Ideal For", "Professionals & SMEs", "Startups raising capital", "Small local business", "Solo founders"],
 ];
 
 const WHY = [
     { ic: "bx-user-voice", t: "Dedicated Experts", p: "A personal CA/CS manager from start to incorporation." },
     { ic: "bx-rupee", t: "Transparent Pricing", p: "Flat fees, government charges at actuals — zero surprises." },
-    { ic: "bx-time-five", t: "On-Time Filing", p: "Most companies incorporated in 7–14 working days." },
-    { ic: "bx-support", t: "Lifetime Support", p: "Compliance, GST and bookkeeping help after you register." },
+    { ic: "bx-time-five", t: "On-Time Filing", p: "Most LLPs incorporated in 7–14 working days." },
+    { ic: "bx-support", t: "Lifetime Support", p: "Compliance, accounting and filings handled after you register." },
 ];
 
 const TESTIMONIALS = [
-    { av: "AM", n: "Arjun Mehta", r: "SaaS Startup, Bengaluru", q: "Incorporated our startup in just 11 days. The team handled DSC, name approval and GST end to end — completely hassle-free." },
-    { av: "PK", n: "Priya Kapoor", r: "D2C Brand, Jaipur", q: "Transparent pricing and a dedicated CS manager who answered every doubt. Highly recommend Vakilkaro for Pvt Ltd registration." },
-    { av: "RV", n: "Rahul Verma", r: "NRI Founder, Dubai", q: "As an NRI I expected it to be complex, but everything was done online with video verification. Got my COI without any trips to India." },
+    { av: "RM", n: "Rahul Mehta", r: "Consulting LLP, Pune", q: "Registered our consulting LLP in under two weeks. DSCs, name approval and the LLP agreement were all handled smoothly." },
+    { av: "PN", n: "Priya Nair", r: "Design Studio LLP, Kochi", q: "Transparent pricing and a manager who guided us through GST and the LLP agreement. Highly recommend." },
+    { av: "VS", n: "Vikram Shah", r: "Architecture LLP, Ahmedabad", q: "From documents to incorporation, everything was online. Our architecture LLP was live without a single office visit." },
 ];
 
 const FAQS = [
-    { q: "How long does Pvt Ltd registration take?", a: "With complete and verified documents, registration is typically completed in 7–14 working days, depending on MCA and RoC processing times." },
-    { q: "How many people are required to start a Pvt Ltd?", a: "A minimum of 2 directors and 2 shareholders (they can be the same individuals). At least one director must be a resident of India." },
-    { q: "Is there a minimum capital requirement?", a: "No. You can start a Private Limited Company with as little as ₹1 in paid-up capital and increase your authorised capital later as your business grows." },
-    { q: "What is included in your registration fee?", a: "Our packages include name approval, DSC & DIN for directors, MoA/AoA drafting, the SPICe+ filing, Certificate of Incorporation, and PAN & TAN. Government fees and stamp duty are billed at actuals." },
-    { q: "Can NRIs or foreign nationals register a company in India?", a: "Yes. NRIs and foreign nationals can own up to 100% of a Pvt Ltd company in most sectors via the automatic FDI route. At least one director must be an Indian resident, and the process can be completed online." },
-    { q: "What compliance is required after incorporation?", a: "Annual filings (AOC-4, MGT-7), board meetings, an AGM, statutory audit, income tax return and director KYC. Our Master and Premium plans handle all of this for you." },
+    { q: "How long does LLP registration take?", a: "With complete and verified documents, registration is typically completed in 7–14 working days, depending on MCA processing times." },
+    { q: "How many partners are required?", a: "A minimum of 2 designated partners, with no upper limit. At least one designated partner must be a resident of India." },
+    { q: "Is there a minimum capital requirement?", a: "No. There is no minimum capital — you can start your LLP with any amount of capital contribution." },
+    { q: "Does an LLP need an audit?", a: "A statutory audit is required only if annual turnover exceeds ₹40 lakh or the capital contribution exceeds ₹25 lakh." },
+    { q: "What annual compliance does an LLP have?", a: "Form 11 (Annual Return) and Form 8 (Statement of Account & Solvency) each year, plus the income tax return. Our Master and Premium plans handle all of this." },
+    { q: "LLP or Private Limited — which is better?", a: "An LLP suits professionals and SMEs wanting limited liability with lower compliance; a private limited company suits startups raising equity or VC funding. Our experts will advise based on your goals." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Private%20Limited%20Company";
+const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20an%20LLP";
 
 /* ---------------- component ---------------- */
-export default function PvtLtdPage() {
+export default function LppPage() {
     const [navOpen, setNavOpen] = useState(false);
     const [openFaq, setOpenFaq] = useState(0);
     const [showLogin, setShowLogin] = useState(false);
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(2);
 
-    const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Private Limited Company Registration", consent: true });
+    const [form, setForm] = useState({ name: "", email: "", phone: "", service: "LLP Registration", consent: true });
     const [errors, setErrors] = useState({});
     const [done, setDone] = useState(null);
 
@@ -118,7 +118,7 @@ export default function PvtLtdPage() {
         if (Object.keys(err).length) return;
         setDone({
             firstName: form.name.trim().split(" ")[0] || "there",
-            refId: "VK-PVT-" + Math.floor(10000 + Math.random() * 89999),
+            refId: "VK-LLP-" + Math.floor(10000 + Math.random() * 89999),
         });
     }
     function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
@@ -180,9 +180,9 @@ export default function PvtLtdPage() {
                     <div className="row align-items-stretch g-4">
                         <div className="col-lg-6 d-flex flex-column">
                             <div className="h2head pt-2 pt-lg-4">
-                                <div className="eyebrow">Private Limited Company · Pvt Ltd Registration</div>
-                                <h1>Register Your <span className="g">Private Limited Company</span> 100% Online</h1>
-                                <p className="h2sub">100% online · Expert CA/CS support · DSC, DIN, PAN, TAN & GST included · incorporation in 7–14 working days.</p>
+                                <div className="eyebrow">Limited Liability Partnership · LLP Registration</div>
+                                <h1>Register Your <span className="g">Limited Liability Partnership</span> 100% Online</h1>
+                                <p className="h2sub">100% online · Expert CA/CS support · DSC, DPIN, name approval, LLP agreement, PAN & TAN included · incorporation in 7–14 working days.</p>
                             </div>
                             <div className="h2photo flex-grow-1">
                                 <div className="ph-frame">
@@ -208,7 +208,7 @@ export default function PvtLtdPage() {
                                 <span className="ff-pill">Instant Rewards</span>
                                 {!done ? (
                                     <>
-                                        <h3 className="ff-title">Need Help with Company Registration?</h3>
+                                        <h3 className="ff-title">Need Help with LLP Registration?</h3>
                                         <p className="ff-sub">Fill up the form below — our expert will call you back</p>
                                         <div className="live"><span className="dot" /> 17 founders enquired in the last 24 hrs</div>
                                         <form onSubmit={submit} noValidate>
@@ -233,11 +233,11 @@ export default function PvtLtdPage() {
                                             <div className="mb-2">
                                                 <label className="form-label">Service Required</label>
                                                 <select className="form-select" name="service" value={form.service} onChange={update}>
-                                                    <option>Private Limited Company Registration</option>
-                                                    <option>One Person Company (OPC)</option>
                                                     <option>LLP Registration</option>
-                                                    <option>Startup India Registration</option>
-                                                    <option>GST + Compliance Package</option>
+                                                    <option>Pvt Ltd vs LLP Consultation</option>
+                                                    <option>LLP Annual Compliance</option>
+                                                    <option>GST + Accounting Package</option>
+                                                    <option>Trademark Registration</option>
                                                     <option>Other Legal / Tax Service</option>
                                                 </select>
                                             </div>
@@ -262,7 +262,7 @@ export default function PvtLtdPage() {
                                     <div className="ff-success">
                                         <div className="ok"><i className="bx bx-check" /></div>
                                         <h3>Thank you, {done.firstName}!</h3>
-                                        <p>Your enquiry is received. A Vakilkaro expert will call you within <b>30 minutes</b> to get your company registered.</p>
+                                        <p>Your enquiry is received. A Vakilkaro expert will call you within <b>30 minutes</b> to get your LLP registered.</p>
                                         <a className="btn btn-wa2" href={WA} target="_blank" rel="noopener noreferrer"><i className="bx bxl-whatsapp" /> Chat now on WhatsApp</a>
                                         <p className="mt-3 mb-0" style={{ fontSize: 12.5, color: "var(--faint)" }}>Reference ID: <b>{done.refId}</b></p>
                                     </div>
@@ -279,7 +279,7 @@ export default function PvtLtdPage() {
                     <div className="row align-items-center g-4 py-5">
                         <div className="col-lg-7">
                             <h2 className="serif">Start your Vakilkaro journey<br />and earn from day one</h2>
-                            <p className="sub">Every new customer gets a head start with bonus VakilCoins — redeemable as a cash discount on any booking, including your company registration.</p>
+                            <p className="sub">Every new customer gets a head start with bonus VakilCoins — redeemable as a cash discount on any booking, including your LLP registration.</p>
                             <div className="coin-step"><div className="n">1</div><div className="tx"><b>Create your profile</b> <span>— earn 200 welcome coins instantly</span></div></div>
                             <div className="coin-step"><div className="n">2</div><div className="tx"><b>Complete your first booking</b> <span>— earn coins on your spend + 500 completion bonus</span></div></div>
                             <div className="coin-step"><div className="n">3</div><div className="tx"><b>Refer a business friend</b> <span>— earn 1,000 coins when they pay their first order</span></div></div>
@@ -312,17 +312,17 @@ export default function PvtLtdPage() {
                 </div>
             </div>
 
-            {/* ===== ABOUT (Pvt Ltd at a glance) ===== */}
+            {/* ===== ABOUT ===== */}
             <section className="section" id="about">
                 <div className="container">
                     <div className="row align-items-center g-5">
                         <div className="col-lg">
                             <div className="glance">
-                                <h4>Pvt Ltd at a glance</h4>
-                                <p>Built for credibility, funding and scale — the structure serious founders choose.</p>
+                                <h4>LLP at a glance</h4>
+                                <p>Limited liability with the flexibility of a partnership — ideal for professionals and growing businesses.</p>
                                 <div className="glance-row">
-                                    <div><b>2</b><small>Min. directors</small></div>
-                                    <div><b>₹1</b><small>Min. capital</small></div>
+                                    <div><b>2</b><small>Min. partners</small></div>
+                                    <div><b>₹0</b><small>Min. capital</small></div>
                                     <div><b>7–14</b><small>Working days</small></div>
                                 </div>
                             </div>
@@ -335,9 +335,9 @@ export default function PvtLtdPage() {
             <section className="section section-alt" id="benefits">
                 <div className="container">
                     <div className="sec-head">
-                        <div className="eyebrow">Why register as Pvt Ltd</div>
-                        <h2>Benefits of a Private Limited Company</h2>
-                        <p>The structure that maximises credibility, protection and funding potential for your business.</p>
+                        <div className="eyebrow">Why register an LLP</div>
+                        <h2>Benefits of a Limited Liability Partnership</h2>
+                        <p>The structure that combines a company's protection with a partnership's simplicity.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {BENEFITS.map((b) => (
@@ -354,8 +354,8 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">Is it right for you?</div>
-                        <h2>Who Should Register a Pvt Ltd?</h2>
-                        <p>A Private Limited Company suits founders who want to grow, raise money and build credibility.</p>
+                        <h2>Who Should Register an LLP?</h2>
+                        <p>An LLP suits businesses that want limited liability without heavy compliance.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
                         {IDEAL.map((i) => (
@@ -373,12 +373,12 @@ export default function PvtLtdPage() {
                     <div className="sec-head">
                         <div className="eyebrow">Keep these ready</div>
                         <h2>Documents Required</h2>
-                        <p>A simple, well-organised checklist — our experts verify everything before filing your SPICe+ form.</p>
+                        <p>A simple, well-organised checklist — our experts verify everything before filing your FiLLiP form.</p>
                     </div>
                     <div className="row g-4">
                         <div className="col-lg-6">
                             <div className="dcol">
-                                <h4><i className="bx bx-id-card" /> For Directors & Shareholders</h4>
+                                <h4><i className="bx bx-id-card" /> For Partners</h4>
                                 <ul>{DOCS_MEMBERS.map((d) => <li key={d}><i className="bx bx-check" /> {d}</li>)}</ul>
                             </div>
                         </div>
@@ -398,7 +398,7 @@ export default function PvtLtdPage() {
                     <div className="sec-head">
                         <div className="eyebrow">Simple & transparent</div>
                         <h2>The Registration Process</h2>
-                        <p>End-to-end on the MCA's integrated SPICe+ form. A dedicated manager updates you at every stage.</p>
+                        <p>End-to-end on the MCA's FiLLiP form. A dedicated manager updates you at every stage.</p>
                     </div>
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {PROCESS.map((s, idx) => (
@@ -451,58 +451,24 @@ export default function PvtLtdPage() {
                             </div>
                             <div className="col-lg-6 text-lg-end mt-3 mt-lg-0">
                                 <div className="fee-tooltip-wrap">
-
                                     <div className="vk-feeno">
                                         Professional fee only — GST & govt. fees
-
-                                        <button
-                                            className="vk-i"
-                                            type="button"
-                                            aria-label="Government fee breakdown"
-                                        >
+                                        <button className="vk-i" type="button" aria-label="Government fee breakdown">
                                             <i className="bx bx-info-circle"></i>
                                         </button>
-
                                         {" "}extra
-
                                         <span className="vk-tip" role="tooltip">
                                             <h5>Govt. & statutory fees — billed at actuals</h5>
-
                                             <ul>
-                                                <li>
-                                                    <span>Name reservation (MCA)</span>
-                                                    <span>~₹1,000</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>SPICe+ incorporation</span>
-                                                    <span>₹0*</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>Stamp duty (MOA/AOA)</span>
-                                                    <span>state-based</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>PAN & TAN issuance</span>
-                                                    <span>~₹131</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>DSC (per director)</span>
-                                                    <span>~₹1,000–2,000</span>
-                                                </li>
-
-
+                                                <li><span>Name reservation (RUN-LLP)</span><span>~₹200</span></li>
+                                                <li><span>FiLLiP incorporation</span><span>capital-based</span></li>
+                                                <li><span>LLP Agreement stamp duty</span><span>state-based</span></li>
+                                                <li><span>PAN & TAN issuance</span><span>~₹131</span></li>
+                                                <li><span>DSC (per partner)</span><span>~₹1,000–2,000</span></li>
                                             </ul>
-
-                                            <div className="note">
-                                                *Nil MCA fee for authorized capital up to ₹15 lakh. Final govt. fees vary by state & capital and are charged at actuals. GST @ 18% applies on our professional fee.
-                                            </div>
+                                            <div className="note">Final govt. fees vary by state & capital contribution and are charged at actuals. GST @ 18% applies on our professional fee.</div>
                                         </span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -536,13 +502,13 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">Choose the right structure</div>
-                        <h2>Pvt Ltd vs LLP vs OPC vs Partnership</h2>
-                        <p>How the popular business structures in India compare for founders.</p>
+                        <h2>LLP vs Pvt Ltd vs Partnership vs Proprietorship</h2>
+                        <p>How the popular business structures compare for founders.</p>
                     </div>
                     <div className="table-responsive">
                         <table className="table table-bordered cmp-table align-middle mb-0">
                             <thead>
-                                <tr><th>Parameter</th><th className="hl">Private Limited</th><th>LLP</th><th>OPC</th><th>Partnership</th></tr>
+                                <tr><th>Parameter</th><th className="hl">LLP</th><th>Private Limited</th><th>Partnership</th><th>Proprietorship</th></tr>
                             </thead>
                             <tbody>
                                 {COMPARE.map((row) => (
@@ -565,7 +531,7 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">The Vakilkaro advantage</div>
-                        <h2>Why 10,000+ Founders Choose Us</h2>
+                        <h2>Why Businesses Choose Us</h2>
                     </div>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
                         {WHY.map((w) => (
@@ -614,7 +580,7 @@ export default function PvtLtdPage() {
             <section className="section">
                 <div className="container">
                     <div className="ctaband">
-                        <h2>Ready to register your Private Limited Company?</h2>
+                        <h2>Ready to register your LLP?</h2>
                         <p>Get a free consultation with a Vakilkaro expert today — incorporation in as little as 7 working days.</p>
                         <div className="cta-row">
                             <a className="btn btn-gold" href="#enquiry"><i className="bx bx-paper-plane" /> Get Started Now</a>
@@ -635,17 +601,16 @@ export default function PvtLtdPage() {
                                 style={{
                                     height: "50px",
                                     width: "auto",
-
                                     display: "block"
                                 }}
                             />
-                            <p className="about-f mt-3">India's trusted legaltech partner for company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
+                            <p className="about-f mt-3">India's trusted legaltech partner for company, LLP, NGO and tax registrations — making compliance simple, transparent and fast.</p>
                         </div>
                         <div className="col-6 col-lg-3">
                             <h5>Services</h5>
                             <a href="/">Trademark Registration</a>
                             <a href="pvt-ltd">Private Limited Company</a>
-                            <a href="farmer-producer-company">Farmer-Producers Company</a>
+                            <a href="llp-registration">LLP Registration</a>
                             <a href="section-8">Section 8 / NGO</a>
                             <a href="Limited-Liability-Partnership">Limited Liability Partnership</a>
                             <a href="section8-microfinance">Section 8 Microfinance</a>
@@ -719,5 +684,3 @@ export default function PvtLtdPage() {
         </>
     );
 }
-
-
