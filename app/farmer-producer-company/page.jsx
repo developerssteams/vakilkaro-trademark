@@ -90,7 +90,7 @@ const FAQS = [
     { q: "What compliance is required after incorporation?", a: "At least 4 board meetings a year, annual filings (AOC-4, MGT-7, DPT-3), director KYC, statutory audit and an AGM. Our Master and Premium plans handle all of this for you." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Farmer%20Producer%20Company";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Farmer%20Producer%20Company";
 
 /* ---------------- component ---------------- */
 export default function FpoPage() {

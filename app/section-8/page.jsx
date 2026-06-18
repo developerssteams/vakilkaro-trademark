@@ -193,7 +193,7 @@ const FAQS = [
     { q: "Can profits be distributed to members?", a: "No. A Section 8 Company's income and profits must be applied only towards promoting its objectives — no dividend can be distributed to its members." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Section%208%20Company";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Section%208%20Company";
 
 /* ---------------- component ---------------- */
 export default function Section8Page() {

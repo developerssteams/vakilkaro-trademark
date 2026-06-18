@@ -90,7 +90,7 @@ const FAQS = [
     { q: "What compliance is required after incorporation?", a: "Annual filings (AOC-4, MGT-7), board meetings, an AGM, statutory audit, income tax return and director KYC. Our Master and Premium plans handle all of this for you." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Private%20Limited%20Company";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Private%20Limited%20Company";
 
 /* ---------------- component ---------------- */
 export default function PvtLtdPage() {

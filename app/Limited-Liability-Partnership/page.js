@@ -90,7 +90,7 @@ const FAQS = [
     { q: "LLP or Private Limited — which is better?", a: "An LLP suits professionals and SMEs wanting limited liability with lower compliance; a private limited company suits startups raising equity or VC funding. Our experts will advise based on your goals." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20an%20LLP";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20an%20LLP";
 
 /* ---------------- component ---------------- */
 export default function LppPage() {

@@ -172,7 +172,7 @@ const FAQS = [
   { q: "Who can apply, and are there fee discounts?", a: "Individuals, proprietors, companies, LLPs, startups and NGOs can apply. Individuals, startups and MSMEs (with a Udyam certificate) get a lower government fee — we help you claim it." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Trademark";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Trademark";
 
 /* ---------------- component ---------------- */
 export default function Page() {

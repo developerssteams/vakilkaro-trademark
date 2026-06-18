@@ -59,13 +59,13 @@ const PLANS = [
 ];
 
 const COMPARE = [
-    ["RBI Registration", "Not required (exempt)*", "Mandatory", "Not required", "Not required"],
-    ["Min. Capital", "Nil", "₹5 crore (NOF)", "₹10 lakh", "Varies"],
-    ["Profit Motive", "Not-for-profit", "For-profit", "For-profit", "Member benefit"],
-    ["Setup Cost & Time", "Low–moderate", "High", "Moderate", "Moderate"],
-    ["Credibility for CSR / Grants", "High", "High", "Low", "Moderate"],
-    ["Public Deposits", "Not allowed", "Not allowed", "Allowed (members)", "Allowed (members)"],
-    ["Ideal For", "Financial-inclusion founders", "Large-scale lenders", "Member savings & lending", "Local cooperatives"],
+    ["RBI Registration", "Not required (exempt)*", "Mandatory", "Not required"],
+    ["Min. Capital", "Nil", "₹5 crore (NOF)", "Varies"],
+    ["Profit Motive", "Not-for-profit", "For-profit", "Member benefit"],
+    ["Setup Cost & Time", "Low–moderate", "High", "Moderate"],
+    ["Credibility for CSR / Grants", "High", "High", "Moderate"],
+    ["Public Deposits", "Not allowed", "Not allowed", "Allowed (members)"],
+    ["Ideal For", "Financial-inclusion founders", "Large-scale lenders", "Local cooperatives"],
 ];
 
 const WHY = [
@@ -90,7 +90,7 @@ const FAQS = [
     { q: "What does the ₹90,000 registration fee include?", a: "Section 8 incorporation, microfinance & relevant objects in the MoA, the Section 8 licence, plus NITI Aayog registration. Government fees and GST are charged separately. Agreements, trademark, compliance and the Finmitra software are available in the higher packages." },
 ];
 
-const WA = "https://wa.me/911141000000?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Section%208%20Microfinance%20Company";
+const WA = "https://wa.me/919828123489?text=Hi%20Vakilkaro%2C%20I%20want%20to%20register%20a%20Section%208%20Microfinance%20Company";
 
 /* ---------------- component ---------------- */
 export default function Section8MicrofinancePage() {
@@ -507,7 +507,7 @@ export default function Section8MicrofinancePage() {
                     <div className="table-responsive">
                         <table className="table table-bordered cmp-table align-middle mb-0">
                             <thead>
-                                <tr><th>Parameter</th><th className="hl">Section 8 Microfinance</th><th>NBFC-MFI</th><th>Nidhi Company</th><th>Co-operative</th></tr>
+                                <tr><th>Parameter</th><th className="hl">Section 8 Microfinance</th><th>NBFC-MFI</th><th>Co-operative</th></tr>
                             </thead>
                             <tbody>
                                 {COMPARE.map((row) => (
