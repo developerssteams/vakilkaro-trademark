@@ -582,7 +582,7 @@ export default function PvtLtdPage() {
                                 style={{
                                     height: "50px",
                                     width: "auto",
-                                   
+
                                     display: "block"
                                 }}
                             />
@@ -590,11 +590,10 @@ export default function PvtLtdPage() {
                         </div>
                         <div className="col-6 col-lg-3">
                             <h5>Services</h5>
-                            <a href="/private-limited">Private Limited Company</a>
-                            <a href="#">One Person Company</a>
-                            <a href="#">LLP Registration</a>
-                            <a href="/section-8">Section 8 / NGO</a>
-                            <a href="#">Trademark</a>
+                            <a href="/">Trademark Registration</a>
+                            <a href="pvt-ltd">Private Limited Company</a>
+                            <a href="farmer-producer-company">Farmer-Producers Company</a>
+                            <a href="section-8">Section 8 / NGO</a>
                         </div>
                         <div className="col-6 col-lg-2">
                             <h5>Company</h5>

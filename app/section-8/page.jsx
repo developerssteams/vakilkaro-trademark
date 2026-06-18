@@ -789,7 +789,7 @@ export default function Section8Page() {
                                 alt="Vakilkaro"
                                 style={{
                                     height: "50px",
-                                    width: "auto",         
+                                    width: "auto",
                                     display: "block"
                                 }}
                             />
@@ -797,11 +797,10 @@ export default function Section8Page() {
                         </div>
                         <div className="col-6 col-lg-3">
                             <h5>Services</h5>
-                            <a href="/section-8">Section 8 / NGO Company</a>
-                            <a href="#">12A & 80G Registration</a>
-                            <a href="#">CSR-1 & FCRA</a>
-                            <a href="#">Trust / Society</a>
                             <a href="/">Trademark Registration</a>
+                            <a href="pvt-ltd">Private Limited Company</a>
+                            <a href="farmer-producer-company">Farmer-Producers Company</a>
+                            <a href="section-8">Section 8 / NGO</a>
                         </div>
                         <div className="col-6 col-lg-2">
                             <h5>Company</h5>

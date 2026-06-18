@@ -673,11 +673,10 @@ export default function Page() {
             </div>
             <div className="col-6 col-lg-3">
               <h5>Services</h5>
-              <a href="#">Trademark Registration</a>
-              <a href="#">Trademark Objection Reply</a>
-              <a href="#">ISO / MSME</a>
-              <a href="#">Private Limited Company</a>
-              <a href="#">Section 8 / NGO</a>
+              <a href="/">Trademark Registration</a>
+              <a href="pvt-ltd">Private Limited Company</a>
+              <a href="farmer-producer-company">Farmer-Producers Company</a>
+              <a href="section-8">Section 8 / NGO</a>
             </div>
             <div className="col-6 col-lg-2">
               <h5>Company</h5>
