@@ -1555,16 +1555,16 @@ a {
 
 /* tablets */
 @media (max-width: 767.98px) {
-  .sec-head {
-    margin-bottom: 32px;
+  .bcard {
+    text-align: center;
   }
 
-  .glance-row b {
-    font-size: 20px;
-  }
-
-  .ctaband {
-    padding: 34px 22px;
+  .bcard .ic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto 16px;
   }
 }
 
@@ -1573,6 +1573,25 @@ a {
   .section {
     padding: 48px 0;
   }
+
+  .tstep {
+    text-align: center;
+  }
+
+  .tstep .num {
+    margin: 0 auto 12px;
+    left: 44%;
+  }
+
+  .tstep .day {
+    text-align: center;
+  }
+
+  .tstep h4,
+  .tstep p {
+    text-align: center;
+  }
+
 
   body {
     padding-bottom: 70px;
@@ -1678,7 +1697,7 @@ a {
   font-weight: 700;
   margin-bottom: 5px;
   color: #5f5f5f;
-  
+
 }
 
 .section-8-tab span {
@@ -1712,6 +1731,12 @@ a {
   font-weight: 700;
   padding: 3px 12px;
   border-radius: 30px;
+}
+@media (max-width: 768px) {
+  .section-8-badge {
+    font-size: 8px;
+    padding: 4px 8px;
+  }
 }
 
 .section-8-card {

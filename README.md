@@ -40,7 +40,7 @@ enquiry form) is handled with React state instead of Bootstrap's JS bundle, so i
 ## Things to wire up before going live
 
 1. **Ambassador image** — add `public/ambassador.png` and change `YOUR AMBASSADOR` in `app/page.js`.
-2. **Phone number** — replace `+91 1141-XXXXXX` / `911141000000` everywhere.
+2. **Phone number** — replace `+91 9828123489` / `911141000000` everywhere.
 3. **Enquiry form** — in `app/page.js`, the `submit()` function has a `// TODO` to POST to your CRM.
 4. **Login modal** — the two login forms `alert()` a placeholder; point them at your auth / wallet API.
 

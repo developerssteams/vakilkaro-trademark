@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+
 /* ---------------- data ---------------- */
 const STATS = [
     { value: "10,000", pl: "+", label: "NGOs & Section 8 Cos. Registered" },
@@ -234,7 +235,7 @@ export default function Section8Page() {
                     <div className="bar">
                         <span><i className="bx bxs-badge-check" /> ISO 9001:2015 Certified</span>
                         <span className="d-none d-md-inline-flex"><i className="bx bxs-star" /> 4.9/5 · 10,000+ Clients</span>
-                        <a className="d-none d-md-inline-flex" href="tel:+911141000000"><i className="bx bxs-phone" /> +91 1141-XXXXXX</a>
+                        <a className="d-none d-md-inline-flex" href="tel:+919828123489"><i className="bx bxs-phone" /> +91 9828123489</a>
                         <span className="right" onClick={openLogin}><i className="bx bx-user-circle" /> <b>Customer Login</b></span>
                     </div>
                 </div>
@@ -243,8 +244,20 @@ export default function Section8Page() {
             {/* ===== NAVBAR ===== */}
             <nav className="navbar navbar-expand-lg sticky-top nav-vk">
                 <div className="container">
-                    <a className="navbar-brand" href="#top"><span className="brandmark">Vakil<b>karo</b></span></a>
-                    <button className="navbar-toggler" type="button" onClick={() => setNavOpen((v) => !v)} aria-label="Toggle navigation">
+                    <a className="navbar-brand" href="#top">
+                        <img
+                            src="/vakillogo.png"
+                            alt="Vakilkaro"
+                            style={{ height: "50px", width: "auto" }}
+                        />
+                    </a>
+
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        onClick={() => setNavOpen((v) => !v)}
+                        aria-label="Toggle navigation"
+                    >
                         <span className="navbar-toggler-icon" />
                     </button>
                     <div className={"collapse navbar-collapse" + (navOpen ? " show" : "")}>
@@ -257,7 +270,7 @@ export default function Section8Page() {
                             <li className="nav-item"><a className="nav-link" href="#faq">FAQs</a></li>
                         </ul>
                         <div className="d-flex align-items-center gap-3">
-                            <span className="nav-phone nav-collapse-phone"><i className="bx bxs-phone" /> +91 1141-XXXXXX</span>
+                            <span className="nav-phone nav-collapse-phone"><i className="bx bxs-phone" /> +91 9828123489</span>
                             <a className="btn btn-login2 btn-sm" href="#login" onClick={openLogin}><i className="bx bx-user" /> Login</a>
                             <a className="btn btn-gold btn-sm" href="#enquiry"><i className="bx bx-bolt-circle" /> Talk to Expert</a>
                         </div>
@@ -760,7 +773,7 @@ export default function Section8Page() {
                         <p>Get a free consultation with a Vakilkaro expert today — licence & incorporation in as little as 10 working days.</p>
                         <div className="cta-row">
                             <a className="btn btn-gold" href="#enquiry"><i className="bx bx-paper-plane" /> Get Started Now</a>
-                            <a className="btn btn-ghost2" href="tel:+911141000000" style={{ borderColor: "rgba(255,255,255,.3)", color: "#fff" }}><i className="bx bxs-phone" /> Call an Expert</a>
+                            <a className="btn btn-ghost2" href="tel:+919828123489" style={{ borderColor: "rgba(255,255,255,.3)", color: "#fff" }}><i className="bx bxs-phone" /> Call an Expert</a>
                         </div>
                     </div>
                 </div>
@@ -771,7 +784,15 @@ export default function Section8Page() {
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-lg-5">
-                            <span className="brandmark" style={{ background: "#fff", color: "#111" }}>Vakil<b style={{ color: "var(--gold-ink)" }}>karo</b></span>
+                            <img
+                                src="/Logo.png"
+                                alt="Vakilkaro"
+                                style={{
+                                    height: "50px",
+                                    width: "auto",         
+                                    display: "block"
+                                }}
+                            />
                             <p className="about-f mt-3">India's trusted legaltech partner for company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
                         </div>
                         <div className="col-6 col-lg-3">
@@ -791,8 +812,8 @@ export default function Section8Page() {
                         </div>
                         <div className="col-lg-2">
                             <h5>Contact</h5>
-                            <a href="tel:+911141000000"><i className="bx bxs-phone" /> +91 1141-XXXXXX</a>
-                            <a href="mailto:hello@vakilkaro.com"><i className="bx bx-envelope" /> hello@vakilkaro.com</a>
+                            <a href="tel:+919828123489"><i className="bx bxs-phone" /> +91 9828123489</a>
+                            <a href="mailto:help@vakilkaro.co.in"><i className="bx bx-envelope" /> help@vakilkaro.co.in</a>
                         </div>
                     </div>
                     <div className="fbar">
@@ -804,7 +825,7 @@ export default function Section8Page() {
 
             {/* ===== FLOATING ELEMENTS ===== */}
             <div className="float-bar">
-                <a className="btn btn-ghost2" href="tel:+911141000000"><i className="bx bxs-phone" /> Call</a>
+                <a className="btn btn-ghost2" href="tel:+919828123489"><i className="bx bxs-phone" /> Call</a>
                 <a className="btn btn-gold" href="#enquiry"><i className="bx bx-paper-plane" /> Free Consultation</a>
             </div>
             <a className="callback-tab" href="#enquiry"><i className="bx bx-phone-call" /> Request Callback</a>
