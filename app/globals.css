@@ -2029,3 +2029,160 @@ a {
     padding: 8px 14px;
   }
 }
+
+.coins-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .03);
+  border-radius: 14px;
+  max-width: 520px;
+}
+
+.coins-note i {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #ffd400;
+  background: rgba(255, 212, 0, .12);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.coins-note strong {
+  display: block;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.coins-note span {
+  display: block;
+  color: rgba(255, 255, 255, .75);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+/* ===== FarmEsy hover tooltip ===== */
+.fe-wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.fe-i {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: #0284c7;
+  font-size: 15px;
+  line-height: 1;
+  display: inline-flex;
+}
+
+.fe-tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: 320px;
+  max-width: 88vw;
+  bottom: calc(100% + 6px);
+  width: 340px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
+  padding: 14px 16px;
+  text-align: left;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* hover pe show + icon se tooltip tak ka gap bridge */
+.fe-wrap:hover .fe-tip,
+.fe-tip:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.fe-tip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.fe-tip::after {
+  /* niche arrow */
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #fff;
+}
+
+.fe-tip h5 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.fe-tip ul {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.fe-tip li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #1e293b;
+  padding: 4px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.fe-tip li:last-child {
+  border-bottom: 0;
+}
+
+.fe-tip li i {
+  color: #0284c7;
+  font-size: 15px;
+}
+
+.fe-note {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  color: #075985;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  text-align: center;
+}

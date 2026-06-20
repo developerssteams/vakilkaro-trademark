@@ -368,6 +368,13 @@ export default function LppPage() {
                             <div className="d-flex gap-3 flex-wrap mt-4">
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
                             </div>
+                            <div className="coins-note">
+                                <i className="bx bx-shield-quarter"></i>
+                                <div>
+                                    <strong>Access your VakilCoins wallet</strong>
+                                    <span>Redeem rewards, track filings & manage benefits in one place.</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-lg-5">
                             <div className="rcard"><div className="ic">🎁</div><div><div className="v">+200</div><div className="l">Welcome bonus coins · already credited</div></div></div>

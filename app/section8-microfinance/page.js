@@ -228,7 +228,7 @@ export default function Section8MicrofinancePage() {
                                         <h3 className="ff-title">Need Help with Microfinance Registration?</h3>
                                         <p className="ff-sub">Fill up the form below — our expert will call you back</p>
                                         <div className="live"><span className="dot" /> 17 promoters enquired in the last 24 hrs</div>
-                                       <form onSubmit={submit} noValidate>
+                                        <form onSubmit={submit} noValidate>
 
                                             <div className="mb-2">
                                                 <label htmlFor="fullName" className="form-label">
@@ -366,6 +366,13 @@ export default function Section8MicrofinancePage() {
                             <div className="coin-step"><div className="n">3</div><div className="tx"><b>Refer a business friend</b> <span>— earn 1,000 coins when they pay their first order</span></div></div>
                             <div className="d-flex gap-3 flex-wrap mt-4">
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
+                            </div>
+                            <div className="coins-note">
+                                <i className="bx bx-shield-quarter"></i>
+                                <div>
+                                    <strong>Access your VakilCoins wallet</strong>
+                                    <span>Redeem rewards, track filings & manage benefits in one place.</span>
+                                </div>
                             </div>
                         </div>
                         <div className="col-lg-5">

@@ -100,6 +100,7 @@ export default function FpoPage() {
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(2);
 
+
     const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Farmer Producer Company Registration", consent: true });
     const [errors, setErrors] = useState({});
     const [done, setDone] = useState(null);
@@ -366,6 +367,13 @@ export default function FpoPage() {
                             <div className="d-flex gap-3 flex-wrap mt-4">
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
                             </div>
+                            <div className="coins-note">
+                                <i className="bx bx-shield-quarter"></i>
+                                <div>
+                                    <strong>Access your VakilCoins wallet</strong>
+                                    <span>Redeem rewards, track filings & manage benefits in one place.</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-lg-5">
                             <div className="rcard"><div className="ic">🎁</div><div><div className="v">+200</div><div className="l">Welcome bonus coins · already credited</div></div></div>
@@ -589,14 +597,50 @@ export default function FpoPage() {
                         <hr />
                         <div className="section-8-plus">Everything in Basic, plus:</div>
                         <div className="row mt-4">
-                            {PLANS[activePlan].features.map((item, i) => (
-                                <div className="col-lg-4 col-md-6 mb-3" key={i}>
-                                    <div className="section-8-feature">
-                                        <i className="bx bx-check-circle"></i>
-                                        <span>{item}</span>
+                            {PLANS[activePlan].features.map((item, i) => {
+                                // CHECK IF THIS IS FARMESY FEATURE
+                                const isFarmesy = item === "FarmEsy management software subscription — 6 months";
+                                return (
+                                    <div className="col-lg-4 col-md-6 mb-3" key={i}>
+                                        <div className="section-8-feature" style={isFarmesy ? {
+                                            backgroundColor: '#f0f9ff',
+                                            borderRadius: '8px',
+                                            padding: '8px 12px',
+                                            border: '1px solid #bae6fd',
+                                            position: 'relative'
+                                        } : {}}>
+                                            <i className="bx bx-check-circle"></i>
+                                            <span>
+                                                {item}
+                                                {isFarmesy && (
+                                                    <span className="fe-wrap">
+                                                        <button className="fe-i" type="button" aria-label="FarmEsy features">
+                                                            <i className="bx bx-info-circle"></i>
+                                                        </button>
+                                                        <span className="fe-tip" role="tooltip">
+                                                            <h5>FarmEsy — 6 month subscription</h5>
+                                                            <ul>
+                                                                <li><i className="bx bx-line-chart" /> Reports &amp; Analytics Dashboard</li>
+                                                                <li><i className="bx bx-group" /> Member &amp; Farmer Management</li>
+                                                                <li><i className="bx bx-package" /> Inventory &amp; Warehouse</li>
+                                                                <li><i className="bx bx-store" /> Input Sales &amp; Agri-Store</li>
+                                                                <li><i className="bx bx-wallet" /> Loan, Deposit &amp; Finance Services</li>
+                                                                <li><i className="bx bx-coin-stack" /> Accounting &amp; Finance</li>
+                                                                <li><i className="bx bx-bullhorn" /> Marketing &amp; Sales</li>
+                                                                <li><i className="bx bx-tree" /> Crop &amp; Farm Management</li>
+                                                                <li><i className="bx bx-user-pin" /> HR &amp; Staff Management</li>
+                                                                <li><i className="bx bx-shield" /> Compliance &amp; Governance</li>
+                                                                <li><i className="bx bx-mobile-alt" /> Mobile App Support</li>
+                                                            </ul>
+                                                            <div className="fe-note">Included in the Premium plan at ₹29,999 (professional fee only)</div>
+                                                        </span>
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                         <div className="section-8-btns">
                             <a href="#enquiry" className="btn section-8-register-btn">
@@ -795,6 +839,8 @@ export default function FpoPage() {
                     </div>
                 </div>
             )}
+
+          
         </>
     );
 }
