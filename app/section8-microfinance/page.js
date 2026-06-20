@@ -222,7 +222,7 @@ export default function Section8MicrofinancePage() {
 
                         <div className="col-lg-6 d-flex align-items-center">
                             <div className="vk-form w-100" id="enquiry">
-                                <span className="ff-pill">Instant Rewards</span>
+                                <span className="ff-pill">Fast Revert</span>
                                 {!done ? (
                                     <>
                                         <h3 className="ff-title">Need Help with Microfinance Registration?</h3>
