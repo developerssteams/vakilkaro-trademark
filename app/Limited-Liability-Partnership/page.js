@@ -187,18 +187,35 @@ export default function LppPage() {
                             <div className="h2photo flex-grow-1">
                                 <div className="ph-frame">
                                     <i className="bx bxs-user ph-ic" />
-                                    <span className="ph-note">Place your licensed cutout<br /><b>ambassador.png</b><br />(transparent background)</span>
+                                    <span className="ph-note">
+                                        Featured Brand Ambassador
+                                        <br />
+                                        <b>Vishal Malhotra</b>
+                                    </span>
                                 </div>
-                                <img className="celeb" src="/ambassador.png" alt="Vakilkaro Brand Ambassador" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+
+                                <img
+                                    className="celeb"
+                                    src="/vishal.jpeg"
+                                    alt="Vishal"
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = "none";
+                                    }}
+                                />
                                 <div className="rate-badge">
                                     <div className="rb-top"><b>4.9</b><i className="bx bxs-star" /></div>
                                     <div className="rb-sub">Our ratings from 10,000+<br />customers on <span className="g-logo">Google</span></div>
                                 </div>
                                 <div className="amb-card">
                                     <small>We are proud to welcome</small>
-                                    <div className="amb-big">YOUR AMBASSADOR</div>
+                                    <div className="amb-big">VISHAL MALHOTRA</div>
                                     <small>as Brand Ambassador of</small>
-                                    <span className="amb-logo">Vakil<b>karo</b></span>
+                                    {/* <span className="amb-logo">Vakil<b>karo</b></span> */}
+                                    <img
+                                        src="/vakillogo.png"
+                                        alt="Vakilkaro"
+                                        style={{ height: "30px", width: "auto" }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -211,43 +228,108 @@ export default function LppPage() {
                                         <h3 className="ff-title">Need Help with LLP Registration?</h3>
                                         <p className="ff-sub">Fill up the form below — our expert will call you back</p>
                                         <div className="live"><span className="dot" /> 17 founders enquired in the last 24 hrs</div>
+
                                         <form onSubmit={submit} noValidate>
+
                                             <div className="mb-2">
-                                                <label className="form-label">Full Name <span className="req">*</span></label>
-                                                <input className={"form-control" + (errors.name ? " is-invalid" : "")} name="name" value={form.name} onChange={update} placeholder="Enter Your Name" />
+                                                <label htmlFor="fullName" className="form-label">
+                                                    Full Name <span className="req">*</span>
+                                                </label>
+                                                <input
+                                                    id="fullName"
+                                                    className={"form-control" + (errors.name ? " is-invalid" : "")}
+                                                    name="name"
+                                                    autoComplete="name"
+                                                    value={form.name}
+                                                    onChange={update}
+                                                    placeholder="Enter Your Name"
+                                                />
                                             </div>
+
                                             <div className="mb-2">
-                                                <label className="form-label">Email Address</label>
-                                                <input className="form-control" name="email" type="email" value={form.email} onChange={update} placeholder="Enter Your Email" />
+                                                <label htmlFor="email" className="form-label">
+                                                    Email Address
+                                                </label>
+                                                <input
+                                                    id="email"
+                                                    className="form-control"
+                                                    name="email"
+                                                    autoComplete="email"
+                                                    type="email"
+                                                    value={form.email}
+                                                    onChange={update}
+                                                    placeholder="Enter Your Email"
+                                                />
                                             </div>
+
                                             <div className="mb-2">
-                                                <label className="form-label">Mobile Number <span className="req">*</span></label>
+                                                <label htmlFor="phone" className="form-label">
+                                                    Mobile Number <span className="req">*</span>
+                                                </label>
+
                                                 <div className="phone-wrap">
                                                     <span className="phone-cc">+91</span>
-                                                    <input className={"form-control" + (errors.phone ? " is-invalid" : "")} name="phone" inputMode="numeric" maxLength={10}
+                                                    <input
+                                                        id="phone"
+                                                        className={"form-control" + (errors.phone ? " is-invalid" : "")}
+                                                        name="phone"
+                                                        autoComplete="tel"
+                                                        inputMode="numeric"
+                                                        maxLength={10}
                                                         value={form.phone}
-                                                        onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, "").slice(0, 10) }))}
-                                                        placeholder="Enter Your Phone" />
+                                                        onChange={(e) =>
+                                                            setForm((f) => ({
+                                                                ...f,
+                                                                phone: e.target.value.replace(/\D/g, "").slice(0, 10),
+                                                            }))
+                                                        }
+                                                        placeholder="Enter Your Phone"
+                                                    />
                                                 </div>
                                             </div>
+
                                             <div className="mb-2">
-                                                <label className="form-label">Service Required</label>
-                                                <select className="form-select" name="service" value={form.service} onChange={update}>
-                                                    <option>LLP Registration</option>
-                                                    <option>Pvt Ltd vs LLP Consultation</option>
-                                                    <option>LLP Annual Compliance</option>
+                                                <label htmlFor="service" className="form-label">
+                                                    Service Required
+                                                </label>
+
+                                                <select
+                                                    id="service"
+                                                    className="form-select"
+                                                    name="service"
+                                                    value={form.service}
+                                                    onChange={update}
+                                                >
+                                                    <option>Limited Liability Partnership Registration</option>
+                                                    <option>Farmer Producer Company Registration</option>
+                                                    <option>Producer Company Compliance</option>
+                                                    <option>NABARD / SFAC FPO Scheme Support</option>
                                                     <option>GST + Accounting Package</option>
-                                                    <option>Trademark Registration</option>
+                                                    <option>Co-operative Society Registration</option>
                                                     <option>Other Legal / Tax Service</option>
                                                 </select>
                                             </div>
+
                                             <div className="form-check consent my-2">
-                                                <input className="form-check-input" type="checkbox" id="consent" name="consent" checked={form.consent} onChange={update} />
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="consent"
+                                                    name="consent"
+                                                    checked={form.consent}
+                                                    onChange={update}
+                                                />
+
                                                 <label className="form-check-label" htmlFor="consent">
-                                                    I have read & agree to the <a href="#">Terms</a>, disclaimer & refund policy, and am ready to accept calls, SMS & emails.
+                                                    I have read & agree to the <a href="#">Terms</a>, disclaimer &
+                                                    refund policy, and am ready to accept calls, SMS & emails.
                                                 </label>
                                             </div>
-                                            <button className="btn btn-gold w-100 py-2" type="submit"><i className="bx bx-paper-plane" /> SUBMIT YOUR QUERY</button>
+
+                                            <button className="btn btn-gold w-100 py-2" type="submit">
+                                                <i className="bx bx-paper-plane" /> SUBMIT YOUR QUERY
+                                            </button>
+
                                         </form>
                                         <div className="ff-or">or talk to us instantly</div>
                                         <a className="btn btn-wa2 w-100" href={WA} target="_blank" rel="noopener noreferrer"><i className="bx bxl-whatsapp" /> Chat on WhatsApp</a>
