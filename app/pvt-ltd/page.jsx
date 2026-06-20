@@ -578,7 +578,7 @@ export default function PvtLtdPage() {
 
                                                 <li>
                                                     <span>DSC (per director)</span>
-                                                    <span>~₹1,000–2,000</span>
+                                                    <span>~₹2,000</span>
                                                 </li>
 
 

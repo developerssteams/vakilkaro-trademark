@@ -551,7 +551,7 @@ export default function Section8MicrofinancePage() {
                                                 <li><span>Section 8 licence & filing</span><span>at actuals</span></li>
                                                 <li><span>Stamp duty (MoA/AoA)</span><span>state-based</span></li>
                                                 <li><span>PAN & TAN</span><span>~₹131</span></li>
-                                                <li><span>DSC (per director)</span><span>~₹1,000–2,000</span></li>
+                                                <li><span>DSC (per director)</span><span>~₹2,000</span></li>
                                             </ul>
                                             <div className="note">Trademark government class fee is billed separately at actuals. GST @ 18% applies on our professional fee.</div>
                                         </span>

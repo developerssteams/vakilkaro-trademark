@@ -553,7 +553,7 @@ export default function LppPage() {
                                                 <li><span>FiLLiP incorporation</span><span>capital-based</span></li>
                                                 <li><span>LLP Agreement stamp duty</span><span>state-based</span></li>
                                                 <li><span>PAN & TAN issuance</span><span>~₹131</span></li>
-                                                <li><span>DSC (per partner)</span><span>~₹1,000–2,000</span></li>
+                                                <li><span>DSC (per partner)</span><span>~₹2,000</span></li>
                                             </ul>
                                             <div className="note">Final govt. fees vary by state & capital contribution and are charged at actuals. GST @ 18% applies on our professional fee.</div>
                                         </span>
