@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useRef, useEffect } from "react";
 
 /* ---------------- data ---------------- */
 const STATS = [
@@ -203,6 +202,12 @@ export default function Section8Page() {
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(1);
 
+    const [videoVisible, setVideoVisible] = useState(true);
+    const [videoPosition, setVideoPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    const videoRef = useRef(null);
+
     const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Section 8 Company Registration", consent: true });
     const [errors, setErrors] = useState({});
     const [done, setDone] = useState(null);
@@ -226,6 +231,77 @@ export default function Section8Page() {
         });
     }
     function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
+
+    const handleMouseDown = (e) => {
+        e.preventDefault();
+        setIsDragging(true);
+        setDragStart({
+            x: e.clientX - videoPosition.x,
+            y: e.clientY - videoPosition.y
+        });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        setVideoPosition({
+            x: e.clientX - dragStart.x,
+            y: e.clientY - dragStart.y
+        });
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    // Touch handlers for mobile
+    const handleTouchStart = (e) => {
+        const touch = e.touches[0];
+        setIsDragging(true);
+        setDragStart({
+            x: touch.clientX - videoPosition.x,
+            y: touch.clientY - videoPosition.y
+        });
+    };
+
+
+    const handleTouchMove = (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        setVideoPosition({
+            x: touch.clientX - dragStart.x,
+            y: touch.clientY - dragStart.y
+        });
+    };
+
+    const handleTouchEnd = () => {
+        setIsDragging(false);
+    };
+
+    useEffect(() => {
+        if (isDragging) {
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('touchmove', handleTouchMove);
+            document.addEventListener('touchend', handleTouchEnd);
+        } else {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
+        }
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, [isDragging]);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch(err => console.log('Autoplay blocked:', err));
+        }
+    }, []);
 
     return (
         <>
@@ -277,6 +353,44 @@ export default function Section8Page() {
                     </div>
                 </div>
             </nav>
+
+            {/* ===== FLOATING VIDEO PLAYER ===== */}
+            {videoVisible && (
+                <div
+                    className="floating-video"
+                    style={{
+                        transform: `translate(${videoPosition.x}px, ${videoPosition.y}px)`,
+                        cursor: isDragging ? 'grabbing' : 'grab'
+                    }}
+                >
+                    <div
+                        className="video-header"
+                        onMouseDown={handleMouseDown}
+                        onTouchStart={handleTouchStart}
+                    >
+                        <span className="video-title">🎬 Ngo Guide</span>
+                        <button
+                            className="video-close"
+                            onClick={() => setVideoVisible(false)}
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    <video
+                        ref={videoRef}
+                        src="/ngo.mp4"
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="video-player"
+                    />
+                    <div className="video-drag-hint">
+                        <i className="bx bx-move"></i> Drag to reposition
+                    </div>
+                </div>
+            )}
 
             {/* ===== HERO ===== */}
             <header className="hero" id="top">
@@ -472,7 +586,8 @@ export default function Section8Page() {
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
                             </div>
                             <div className="coins-note">
-                                <i className="bx bx-shield-quarter"></i>
+
+                                <i className="bx bx-coin-stack"></i>
                                 <div>
                                     <strong>Access your VakilCoins wallet</strong>
                                     <span>Redeem rewards, track filings & manage benefits in one place.</span>

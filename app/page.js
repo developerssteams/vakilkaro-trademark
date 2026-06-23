@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 /* ---------------- data ---------------- */
 const STATS = [
@@ -12,7 +12,7 @@ const STATS = [
 
 const BENEFITS = [
   { ic: "bx-shield-quarter", t: "Exclusive Rights", p: "Get the sole right to use your brand name and logo for your registered class across India." },
-  { ic: "bx-gavel", t: "Legal Protection", p: "Take legal action against anyone who copies or misuses your registered mark." },
+  { ic: "bx-shield", t: "Legal Protection", p: "Take legal action against anyone who copies or misuses your registered mark." },
   { ic: "bx-registered", t: "™ & ® Symbols", p: "Use ™ the moment you file and ® once your trademark is registered." },
   { ic: "bx-medal", t: "Brand Trust & Value", p: "A registered brand builds credibility with customers, partners and investors." },
   { ic: "bx-transfer-alt", t: "A Business Asset", p: "Your trademark is intellectual property that can be sold, licensed or franchised." },
@@ -181,9 +181,16 @@ export default function Page() {
   const [showLogin, setShowLogin] = useState(false);
   const [loginTab, setLoginTab] = useState("otp");
 
+  // Video states
+  const [videoVisible, setVideoVisible] = useState(true);
+  const [videoPosition, setVideoPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const videoRef = useRef(null);
+
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "Trademark Registration", consent: true });
   const [errors, setErrors] = useState({});
-  const [done, setDone] = useState(null); // null | {firstName, refId}
+  const [done, setDone] = useState(null);
 
   function update(e) {
     const { name, value, type, checked } = e.target;
@@ -198,7 +205,6 @@ export default function Page() {
     if (!form.consent) err.consent = true;
     setErrors(err);
     if (Object.keys(err).length) return;
-    // TODO: POST `form` to your CRM / backend here.
     setDone({
       firstName: form.name.trim().split(" ")[0] || "there",
       refId: "VK-TM-" + Math.floor(10000 + Math.random() * 89999),
@@ -210,8 +216,80 @@ export default function Page() {
     setShowLogin(true);
   }
 
+  // Video drag handlers
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - videoPosition.x,
+      y: e.clientY - videoPosition.y
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setVideoPosition({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    setIsDragging(true);
+    setDragStart({
+      x: touch.clientX - videoPosition.x,
+      y: touch.clientY - videoPosition.y
+    });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    setVideoPosition({
+      x: touch.clientX - dragStart.x,
+      y: touch.clientY - dragStart.y
+    });
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isDragging]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => console.log('Autoplay blocked:', err));
+    }
+  }, []);
+
   return (
     <>
+    
       {/* ===== TOP BAR ===== */}
       <div className="topbar">
         <div className="container">
@@ -245,21 +323,59 @@ export default function Page() {
           </button>
           <div className={"collapse navbar-collapse" + (navOpen ? " show" : "")}>
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li className="nav-item"><a className="nav-link" href="#about">Overview</a></li>
-              <li className="nav-item"><a className="nav-link" href="#benefits">Benefits</a></li>
-              <li className="nav-item"><a className="nav-link" href="#process">Process</a></li>
-              <li className="nav-item"><a className="nav-link" href="#pricing">Pricing</a></li>
-              <li className="nav-item"><a className="nav-link" href="#compare">Compare</a></li>
-              <li className="nav-item"><a className="nav-link" href="#faq">FAQs</a></li>
+              <li className="nav-item"><a className="nav-link" href="#about" onClick={() => setNavOpen(false)}>Overview</a></li>
+              <li className="nav-item"><a className="nav-link" href="#benefits" onClick={() => setNavOpen(false)}>Benefits</a></li>
+              <li className="nav-item"><a className="nav-link" href="#process" onClick={() => setNavOpen(false)}>Process</a></li>
+              <li className="nav-item"><a className="nav-link" href="#pricing" onClick={() => setNavOpen(false)}>Pricing</a></li>
+              <li className="nav-item"><a className="nav-link" href="#compare" onClick={() => setNavOpen(false)}>Compare</a></li>
+              <li className="nav-item"><a className="nav-link" href="#faq" onClick={() => setNavOpen(false)}>FAQs</a></li>
             </ul>
             <div className="d-flex align-items-center gap-3">
               <span className="nav-phone nav-collapse-phone"><i className="bx bxs-phone" /> +91 9828123489</span>
               <a className="btn btn-login2 btn-sm" href="#login" onClick={openLogin}><i className="bx bx-user" /> Login</a>
-              <a className="btn btn-gold btn-sm" href="#enquiry"><i className="bx bx-bolt-circle" /> Talk to Expert</a>
+              <a className="btn btn-gold btn-sm" href="#enquiry" onClick={() => setNavOpen(false)}><i className="bx bx-bolt-circle" /> Talk to Expert</a>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* ===== FLOATING VIDEO PLAYER ===== */}
+      {videoVisible && (
+        <div
+          className="floating-video"
+          style={{
+            transform: `translate(${videoPosition.x}px, ${videoPosition.y}px)`,
+            cursor: isDragging ? 'grabbing' : 'grab'
+          }}
+        >
+          <div
+            className="video-header"
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+          >
+            <span className="video-title">🎬 Trademark Guide</span>
+            <button
+              className="video-close"
+              onClick={() => setVideoVisible(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <video
+            ref={videoRef}
+            src="/Trademark.mp4"
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="video-player"
+          />
+          <div className="video-drag-hint">
+            <i className="bx bx-move"></i> Drag to reposition
+          </div>
+        </div>
+      )}
 
       {/* ===== HERO ===== */}
       <header className="hero" id="top">
@@ -272,7 +388,6 @@ export default function Page() {
                 <h1>Protect Your Brand — Register Your <span className="g">Trademark</span> Online</h1>
                 <p className="h2sub">100% online · TM attorney support · 24-hour filing guarantee · use the ™ symbol from day one · free brand & class search.</p>
               </div>
-              {/* ambassador photo — drop your licensed cutout at /public/ambassador.png */}
               <div className="h2photo flex-grow-1">
                 <div className="ph-frame">
                   <i className="bx bxs-user ph-ic" />
@@ -299,7 +414,6 @@ export default function Page() {
                   <small>We are proud to welcome</small>
                   <div className="amb-big">VISHAL MALHOTRA</div>
                   <small>as Brand Ambassador of</small>
-                  {/* <span className="amb-logo">Vakil<b>karo</b></span> */}
                   <img
                     src="/vakillogo.png"
                     alt="Vakilkaro"
@@ -457,9 +571,9 @@ export default function Page() {
               <div className="d-flex gap-3 flex-wrap mt-4">
                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
               </div>
-              
+
               <div className="coins-note">
-                <i className="bx bx-shield-quarter"></i>
+                <i className="bx bx-coin-stack"></i>
                 <div>
                   <strong>Access your VakilCoins wallet</strong>
                   <span>Redeem rewards, track filings & manage benefits in one place.</span>
@@ -496,17 +610,6 @@ export default function Page() {
       <section className="section" id="about">
         <div className="container">
           <div className="row align-items-center g-5">
-            {/* <div className="col-lg-6">
-              <div className="eyebrow">Understand the basics</div>
-              <h2 className="serif" style={{ fontSize: 36, margin: "10px 0 14px" }}>What is a Trademark?</h2>
-              <p className="about-body">A trademark is a unique sign — a brand name, logo, slogan or symbol — that identifies your goods or services and sets them apart from competitors. Registering it under the Trade Marks Act, 1999 gives you exclusive legal rights to that mark across India.</p>
-              <p className="about-body">Once you file, you can use ™ immediately; after registration you can use ® and stop others from copying your brand. A trademark is a valuable business asset that can be sold, licensed or franchised.</p>
-              <ul className="about-list">
-                <li><i className="bx bx-check-shield" /> Exclusive right to use your brand name & logo in its class</li>
-                <li><i className="bx bx-check-shield" /> Legal protection against copycats and infringement</li>
-                <li><i className="bx bx-check-shield" /> Use ™ from day one of filing, ® after registration</li>
-              </ul>
-            </div> */}
             <div className="col-lg">
               <div className="glance">
                 <h4>Trademark at a glance</h4>
@@ -754,7 +857,6 @@ export default function Page() {
                 style={{
                   height: "50px",
                   width: "auto",
-
                   display: "block"
                 }}
               />
@@ -835,6 +937,8 @@ export default function Page() {
           </div>
         </div>
       )}
+
+
     </>
   );
 }

@@ -369,7 +369,7 @@ export default function LppPage() {
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
                             </div>
                             <div className="coins-note">
-                                <i className="bx bx-shield-quarter"></i>
+                                 <i className="bx bx-coin-stack"></i>
                                 <div>
                                     <strong>Access your VakilCoins wallet</strong>
                                     <span>Redeem rewards, track filings & manage benefits in one place.</span>

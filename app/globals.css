@@ -158,8 +158,14 @@ a {
 .topbar {
   background: var(--black);
   color: #d0d0d0;
-  font-size: 13px;
+  font-size: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+
 
 .topbar .bar {
   display: flex;
@@ -197,6 +203,10 @@ a {
   background: rgba(255, 255, 255, .92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 40px;
+  /* topbar ki height ke hisaab se */
+  z-index: 1040;
 }
 
 .brandmark {
@@ -408,8 +418,8 @@ a {
 
 .amb-big {
   font-family: "Spectral", serif;
-  font-size: 23px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 500;
   color: var(--theme-black);
   margin: 3px 0;
 }
@@ -1430,6 +1440,7 @@ a {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  margin-top: 60px;
 }
 
 .lm {
@@ -1440,6 +1451,7 @@ a {
   overflow: hidden;
   box-shadow: var(--sh-lg);
   border: 2px solid var(--gold);
+  margin: auto;
 }
 
 .lm-head {
@@ -1607,7 +1619,7 @@ a {
   .amb-card {
     left: 50%;
     transform: translateX(-50%);
-    bottom: 6px;
+    bottom: 0px;
   }
 
   .rate-badge {
@@ -2185,4 +2197,243 @@ a {
   padding: 8px 10px;
   font-size: 11.5px;
   text-align: center;
+}
+
+
+
+/* video and header stuc css  */
+
+/* ===== FLOATING VIDEO CSS ===== */
+
+.floating-video {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  z-index: 9999;
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: 2px solid #d4a853;
+  min-width: 200px;
+  transition: box-shadow 0.3s ease;
+  width: 280px;
+  /* Instagram Reels ke hisaab se chhota rakha */
+}
+
+.floating-video:hover {
+  box-shadow: 0 15px 50px rgba(212, 168, 83, 0.3);
+}
+
+.video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  cursor: grab;
+  user-select: none;
+  border-bottom: 1px solid #d4a853;
+}
+
+.video-header:active {
+  cursor: grabbing;
+}
+
+.video-title {
+  color: #d4a853;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.video-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 6px;
+  transition: color 0.3s ease;
+}
+
+.video-close:hover {
+  color: #d4a853;
+}
+
+.video-player {
+  display: block;
+  background: #000;
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+  /* Instagram Reels ke hisaab se height (9:16 ratio) */
+  aspect-ratio: 9/16;
+  /* Portrait mode */
+}
+
+.video-drag-hint {
+  text-align: center;
+  padding: 3px;
+  font-size: 10px;
+  color: #888;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid #333;
+}
+
+.video-drag-hint i {
+  margin-right: 4px;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .floating-video {
+    bottom: 80px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    width: auto !important;
+    max-width: 280px;
+    /* Mobile pe bhi max width limit */
+    margin: 0 auto;
+    /* Center align */
+  }
+
+  .video-player {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 9/16;
+    /* Portrait mode maintain */
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-video {
+    bottom: 70px;
+    right: 5px;
+    left: 5px;
+    max-width: 200px;
+    /* Chhoti screen pe aur chhota */
+  }
+
+  .video-title {
+    font-size: 10px;
+  }
+
+  .video-drag-hint {
+    font-size: 8px;
+  }
+
+  .video-player {
+    max-height: 350px;
+  }
+}
+
+/* ===== NAVBAR FIX - MOBILE ===== */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    z-index: 1050;
+  }
+
+  .navbar-collapse.show {
+    display: block !important;
+  }
+
+  .nav-vk {
+    /* position: relative !important; */
+    background: #fff !important;
+  }
+
+  .navbar-nav {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .nav-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-item:last-child {
+    border-bottom: none;
+  }
+
+  .nav-link {
+    font-size: 16px !important;
+    padding: 8px 0 !important;
+  }
+
+  .d-flex.align-items-center.gap-3 {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px !important;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+  }
+
+  .d-flex.align-items-center.gap-3 .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-phone.nav-collapse-phone {
+    display: block !important;
+    text-align: center;
+    padding: 8px;
+  }
+}
+
+/* ===== TOPBAR FIX ===== */
+@media (max-width: 768px) {
+  .topbar .bar {
+    /* flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    font-size: 11px;
+    padding: 6px 0; */
+
+    gap: 8px;
+    font-size: 11px;
+    min-height: 34px;
+    padding: 4px 12px;
+  }
+
+
+
+
+
+
+  .topbar .bar .right {
+    margin-left: auto;
+  }
+}
+
+/* ===== NAVBAR STICKY ===== */
+.nav-vk {
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1040;
+}
+
+@media (max-width: 991px) {
+  .nav-vk {
+    background: #fff !important;
+    position: sticky !important;
+    top: 0 !important;
+    top: 34px !important;
+  }
+
+  .navbar-brand img {
+    height: 40px !important;
+  }
 }
