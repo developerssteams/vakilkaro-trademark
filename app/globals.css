@@ -37,9 +37,9 @@ body {
   overflow-x: hidden;
 }
 
-.serif {
+/* .serif {
   font-family: "Spectral", Georgia, serif;
-}
+} */
 
 h1,
 h2,
@@ -78,7 +78,7 @@ a {
 }
 
 .sec-head h2 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: clamp(28px, 3.2vw, 40px);
   font-weight: 600;
   margin: 10px 0;
@@ -216,7 +216,7 @@ a {
   font-size: 18px;
   padding: 7px 12px;
   border-radius: 10px;
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
 }
 
 .brandmark b {
@@ -276,7 +276,7 @@ a {
 }
 
 .h2head h1 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: clamp(30px, 3.6vw, 50px);
   font-weight: 600;
   margin: 10px 0 12px;
@@ -364,7 +364,7 @@ a {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 10px;
   font-weight: 700;
   color: #e8821e;
@@ -417,7 +417,7 @@ a {
 }
 
 .amb-big {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 10px;
   font-weight: 500;
   color: var(--theme-black);
@@ -433,7 +433,7 @@ a {
   font-size: 13px;
   padding: 4px 11px;
   border-radius: 8px;
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
 }
 
 .amb-logo b {
@@ -465,7 +465,7 @@ a {
 }
 
 .ff-title {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 23px;
   font-weight: 600;
   text-align: center;
@@ -617,7 +617,7 @@ a {
 
 .ff-price b {
   color: var(--theme-black);
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 15px;
 }
 
@@ -643,7 +643,7 @@ a {
 }
 
 .ff-success h3 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 23px;
   color: var(--theme-black);
   margin-bottom: 7px;
@@ -661,7 +661,7 @@ a {
 }
 
 .coins h2 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: clamp(26px, 3vw, 36px);
   font-weight: 600;
   line-height: 1.15;
@@ -691,7 +691,7 @@ a {
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
 }
 
 .coin-step .tx {
@@ -725,7 +725,7 @@ a {
 }
 
 .rcard .v {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 26px;
   font-weight: 600;
   color: var(--gold);
@@ -750,7 +750,7 @@ a {
 }
 
 .stat .v {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: clamp(26px, 3.2vw, 38px);
   font-weight: 700;
   color: var(--theme-black);
@@ -802,7 +802,7 @@ a {
 }
 
 .glance h4 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 8px;
@@ -822,7 +822,7 @@ a {
 }
 
 .glance-row b {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 24px;
   color: var(--gold);
 }
@@ -966,7 +966,7 @@ a {
   display: grid;
   place-items: center;
   font-weight: 700;
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   box-shadow: var(--sh);
 }
 
@@ -1133,7 +1133,7 @@ a {
 }
 
 .vk-plan .price {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 34px;
   font-weight: 600;
   margin: 8px 0 2px;
@@ -1142,7 +1142,7 @@ a {
 .vk-plan .price small {
   font-size: 14px;
   color: var(--faint);
-  font-family: "Hanken Grotesk";
+  /* font-family: "Hanken Grotesk"; */
 }
 
 .vk-plan.feat .price small {
@@ -1191,7 +1191,7 @@ a {
 }
 
 .plan-for {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-style: italic;
   font-size: 13.5px;
   color: var(--muted);
@@ -1309,7 +1309,7 @@ a {
 }
 
 .ctaband h2 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: clamp(26px, 3vw, 38px);
   font-weight: 600;
   position: relative;
@@ -1489,7 +1489,7 @@ a {
 }
 
 .lm-head h3 {
-  font-family: "Spectral", serif;
+  /* font-family: "Spectral", serif; */
   font-size: 23px;
   font-weight: 600;
   margin-top: 12px;
@@ -2435,5 +2435,355 @@ a {
 
   .navbar-brand img {
     height: 40px !important;
+  }
+}
+
+
+
+
+/* ===== NEWS SECTION ===== */
+.news-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--sh);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  border-color: var(--gold-soft);
+}
+.news-img {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  padding: 0;  /* ← Padding 0 karo */
+  text-align: center;
+  position: relative;
+  height: 160px;  /* ← FIXED HEIGHT ADD KARO */
+  min-height: 160px;  /* ← MIN-HEIGHT BHI SET KARO */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;  /* ← IMAGE CROP HOGA */
+}
+
+.news-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* ← IMAGE COVER KAREGA */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.news-img i {
+  font-size: 36px;  /* ← 42px se 36px karo */
+  color: var(--gold);
+  opacity: 0.8;
+  position: relative;
+  z-index: 2;
+}
+
+.news-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 100%);
+  z-index: 1;
+}
+
+
+.news-source-logo {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  padding: 3px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  z-index: 2;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+
+.news-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--gold);
+  color: #212121;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+
+.news-body {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-source {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.news-body h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  color: var(--theme-black);
+}
+
+.news-body p {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.news-link {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--gold-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.3s ease;
+}
+
+.news-link:hover {
+  gap: 10px;
+  color: var(--theme-black);
+}
+
+/* ===== NEWS - MOBILE RESPONSIVE ===== */
+@media (max-width: 991px) {
+  .news-img {
+      height: 130px;
+    min-height: 130px;
+    
+    padding: 24px 16px;
+  }
+
+  .news-img i {
+    font-size: 34px;
+  }
+
+  .news-body h4 {
+    font-size: 15px;
+  }
+
+  .news-body p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-card {
+    border-radius: 14px;
+  }
+
+  .news-img {
+    min-height: 70px;
+    padding: 20px 16px;
+  }
+
+  .news-img i {
+    font-size: 28px;
+  }
+
+  .news-body {
+    padding: 14px 16px 18px;
+  }
+
+  .news-body h4 {
+    font-size: 14px;
+  }
+
+  .news-body p {
+    font-size: 12.5px;
+  }
+
+  .news-badge {
+    font-size: 8px;
+    padding: 3px 8px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-img {
+    min-height: 60px;
+    padding: 16px 12px;
+  }
+
+  .news-img i {
+    font-size: 24px;
+  }
+
+  .news-body {
+    padding: 12px 14px 16px;
+  }
+
+  .news-body h4 {
+    font-size: 13px;
+  }
+
+  .news-body p {
+    font-size: 12px;
+  }
+
+  .news-source {
+    font-size: 10px;
+  }
+
+  .news-link {
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+/* ===== SOCIAL ICONS - FOOTER ===== */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.social-link i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hover Effect */
+.social-link:hover {
+  /* background: var(--gold, #ffcc00); */
+  /* color: #212121; */
+  color: black;
+  transform: translateY(-3px);
+  /* box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3); */
+  /* border-color: var(--gold, #ffcc00); */
+}
+
+.social-link:hover i {
+  transform: scale(1.1);
+}
+
+/* Individual Brand Colors on Hover */
+.social-link.facebook:hover {
+  background: #1877F2;
+  border-color: #1877F2;
+  color: white;
+  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4);
+}
+
+.social-link.instagram:hover {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: #dc2743;
+  color: white;
+  box-shadow: 0 8px 25px rgba(225, 48, 108, 0.4);
+}
+
+.social-link.youtube:hover {
+  background: #FF0000;
+  border-color: #FF0000;
+  color: white;
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+}
+
+.social-link.linkedin:hover {
+  background: #0A66C2;
+  border-color: #0A66C2;
+  color: white;
+  box-shadow: 0 8px 25px rgba(10, 102, 194, 0.4);
+}
+
+.social-link.twitter:hover {
+  background: #000000;
+  border-color: #000000;
+  color: white;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.social-link.whatsapp:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: white;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+/* ===== SOCIAL ICONS - MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .social-link {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-link i {
+    font-size: 17px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-link {
+    width: 36px;
+    height: 36px;
+  }
+
+  .social-link i {
+    font-size: 15px;
+  }
+
+  .social-icons {
+    gap: 8px;
   }
 }

@@ -9,14 +9,13 @@ const STATS = [
   { value: "50", pl: "+", label: "TM Attorneys" },
   { value: "98", pl: "%", label: "Client Satisfaction" },
 ];
-
 const BENEFITS = [
-  { ic: "bx-shield-quarter", t: "Exclusive Rights", p: "Get the sole right to use your brand name and logo for your registered class across India." },
-  { ic: "bx-shield", t: "Legal Protection", p: "Take legal action against anyone who copies or misuses your registered mark." },
-  { ic: "bx-registered", t: "™ & ® Symbols", p: "Use ™ the moment you file and ® once your trademark is registered." },
-  { ic: "bx-medal", t: "Brand Trust & Value", p: "A registered brand builds credibility with customers, partners and investors." },
-  { ic: "bx-transfer-alt", t: "A Business Asset", p: "Your trademark is intellectual property that can be sold, licensed or franchised." },
-  { ic: "bx-map", t: "Nationwide Validity", p: "Protection across all of India for 10 years — renewable indefinitely." },
+  { ic: "bx bx-shield-quarter", t: "Exclusive Rights", p: "Get the sole right to use your brand name and logo for your registered class across India." },
+  { ic: "fa-solid fa-gavel", t: "Legal Protection", p: "Take legal action against anyone who copies or misuses your registered mark." },
+  { ic: "bx bx-registered", t: "™ & ® Symbols", p: "Use ™ the moment you file and ® once your trademark is registered." },
+  { ic: "bx bx-medal", t: "Brand Trust & Value", p: "A registered brand builds credibility with customers, partners and investors." },
+  { ic: "bx bx-transfer-alt", t: "A Business Asset", p: "Your trademark is intellectual property that can be sold, licensed or franchised." },
+  { ic: "bx bx-map", t: "Nationwide Validity", p: "Protection across all of India for 10 years — renewable indefinitely." },
 ];
 
 const IDEAL = [
@@ -181,6 +180,7 @@ export default function Page() {
   const [showLogin, setShowLogin] = useState(false);
   const [loginTab, setLoginTab] = useState("otp");
 
+
   // Video states
   const [videoVisible, setVideoVisible] = useState(true);
   const [videoPosition, setVideoPosition] = useState({ x: 0, y: 0 });
@@ -215,6 +215,7 @@ export default function Page() {
     if (e) e.preventDefault();
     setShowLogin(true);
   }
+
 
   // Video drag handlers
   const handleMouseDown = (e) => {
@@ -289,7 +290,7 @@ export default function Page() {
 
   return (
     <>
-    
+
       {/* ===== TOP BAR ===== */}
       <div className="topbar">
         <div className="container">
@@ -339,6 +340,7 @@ export default function Page() {
         </div>
       </nav>
 
+
       {/* ===== FLOATING VIDEO PLAYER ===== */}
       {videoVisible && (
         <div
@@ -363,7 +365,7 @@ export default function Page() {
           </div>
           <video
             ref={videoRef}
-            src="/Trademark.mp4"
+            src="/multi.mp4"
             controls
             autoPlay
             muted
@@ -637,7 +639,9 @@ export default function Page() {
             {BENEFITS.map((b) => (
               <div className="col" key={b.t}>
                 <div className="bcard">
-                  <div className="ic"><i className={"bx " + b.ic} /></div>
+                  <div className="ic">
+                    <i className={b.ic}></i>
+                  </div>
                   <h4>{b.t}</h4>
                   <p>{b.p}</p>
                 </div>
@@ -797,6 +801,126 @@ export default function Page() {
         </div>
       </section>
 
+
+      {/* ===== NEWS & MEDIA ===== */}
+      <section className="section" id="news">
+        <div className="container">
+          <div className="sec-head">
+            <div className="eyebrow">In the News</div>
+            <h2>Vakilkaro in Media</h2>
+            <p>Trusted by leading publications and media houses across India.</p>
+          </div>
+
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {/* NEWS 1 - Times of India */}
+            <div className="col">
+              <div className="news-card">
+                <div className="news-img">
+                  <img
+                    src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop&crop=center"
+                    alt="Times of India Feature"
+                    loading="lazy"
+                  />
+                  <div className="news-overlay"></div>
+                  <i className="bx bx-news news-icon"></i>
+                  <span className="news-badge">Featured</span>
+                  <span className="news-source-logo">📰 The Times of India</span>
+                </div>
+                <div className="news-body">
+                  <span className="news-source">The Times of India</span>
+                  <h4>Vakilkaro: India's Most Trusted LegalTech for MSMEs</h4>
+                  <p>With over 15,000+ successful trademark registrations, Vakilkaro emerges as the go-to platform for small businesses across 200+ cities.</p>
+                  <a href="#" className="news-link">
+                    Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* NEWS 2 - Hindustan Times + Brand Ambassador */}
+            <div className="col">
+              <div className="news-card">
+                <div className="news-img">
+                  <img
+                    src="/vishal_Copy.jpeg"
+                    alt="Vishal Malhotra Brand Ambassador Hindustan Times"
+                    loading="lazy"
+                  />
+                  <div className="news-overlay"></div>
+                  <i className="bx bx-user-check news-icon"></i>
+                  <span className="news-badge">Brand Ambassador</span>
+                  <span className="news-source-logo">📰 Hindustan Times</span>
+                </div>
+                <div className="news-body">
+                  <span className="news-source">Hindustan Times</span>
+                  <h4>Bollywood's Vishal Malhotra Joins Vakilkaro as Brand Face</h4>
+                  <p>Actor and entrepreneur Vishal Malhotra partners with Vakilkaro to spread awareness about intellectual property rights among India's youth.</p>
+                  <a href="#" className="news-link">
+                    Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* NEWS 3 - The Hindu BusinessLine */}
+            <div className="col">
+              <div className="news-card">
+                <div className="news-img">
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center"
+                    alt="The Hindu BusinessLine Award"
+                    loading="lazy"
+                  />
+                  <div className="news-overlay"></div>
+                  <i className="bx bx-trophy news-icon"></i>
+                  <span className="news-badge">Award Winner</span>
+                  <span className="news-source-logo">🏆 BusinessLine</span>
+                </div>
+                <div className="news-body">
+                  <span className="news-source">The Hindu BusinessLine</span>
+                  <h4>Top 10 Game-Changing LegalTech Startups of 2025</h4>
+                  <p>Vakilkaro recognized for revolutionizing IP protection with AI-driven solutions, serving 50,000+ MSMEs across India.</p>
+                  <a href="#" className="news-link">
+                    Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* NEWS 4 - CNBC Awaaz */}
+            <div className="col">
+              <div className="news-card">
+                <div className="news-img">
+                  <img
+                    src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&h=400&fit=crop&crop=center"
+                    alt="CNBC Awaaz Interview"
+                    loading="lazy"
+                  />
+                  <div className="news-overlay"></div>
+                  <i className="bx bx-microphone news-icon"></i>
+                  <span className="news-badge">Exclusive</span>
+                  <span className="news-source-logo">📺 CNBC Awaaz</span>
+                </div>
+                <div className="news-body">
+                  <span className="news-source">CNBC Awaaz</span>
+                  <h4>How Vakilkaro is Making Trademark Registration Accessible for All</h4>
+                  <p>In an exclusive interview, founder Anshul shares how AI and automation are helping Indian entrepreneurs protect their brands at just ₹1,499.</p>
+                  <a href="#" className="news-link">
+                    Watch Interview <i className="bx bx-right-arrow-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-4">
+            <a href="#" className="btn btn-gold">
+              <i className="bx bx-news"></i> View All Media Coverage
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ===== TESTIMONIALS ===== */}
       <section className="section" id="reviews">
         <div className="container">
@@ -861,6 +985,27 @@ export default function Page() {
                 }}
               />
               <p className="about-f mt-3">India's trusted legaltech partner for trademark, company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
+              {/* ===== SOCIAL ICONS ===== */}
+              <div className="social-icons mt-3">
+                <a href="https://www.facebook.com/allvakilkaro" className="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/vakilkaro" className="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCQ7bflrB-izpvrKLDR_Nktg" className="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/vakilkro/" className="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-linkedin"></i>
+                </a>
+                <a href="https://x.com/vakil_karo" className="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-twitter"></i>
+                </a>
+                <a href="#" className="social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                  <i className="bx bxl-whatsapp"></i>
+                </a>
+              </div>
             </div>
             <div className="col-6 col-lg-3">
               <h5>Services</h5>
