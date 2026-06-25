@@ -861,7 +861,8 @@ a {
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: var(--gold-soft);
+  /* background: var(--gold-soft); */
+  background:#1c1c1c;
   color: var(--gold-ink);
   display: grid;
   place-items: center;
@@ -2787,3 +2788,4 @@ a {
     gap: 8px;
   }
 }
+

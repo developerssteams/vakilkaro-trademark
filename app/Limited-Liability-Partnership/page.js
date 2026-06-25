@@ -100,6 +100,7 @@ export default function LppPage() {
     const [showLogin, setShowLogin] = useState(false);
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(2);
+    const [loginPhone, setLoginPhone] = useState(""); // ✅ Yeh line add karo
 
     const [videoVisible, setVideoVisible] = useState(true);
     const [videoPosition, setVideoPosition] = useState({ x: 0, y: 0 });
@@ -116,18 +117,68 @@ export default function LppPage() {
         const { name, value, type, checked } = e.target;
         setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
     }
-    function submit(e) {
+
+    // ✅ Naya submit function - API + Auto Popup
+    async function submit(e) {
         e.preventDefault();
+
         const err = {};
         if (!form.name.trim()) err.name = true;
         if (form.phone.replace(/\D/g, "").length !== 10) err.phone = true;
         if (!form.consent) err.consent = true;
         setErrors(err);
         if (Object.keys(err).length) return;
-        setDone({
-            firstName: form.name.trim().split(" ")[0] || "there",
-            refId: "VK-LLP-" + Math.floor(10000 + Math.random() * 89999),
-        });
+
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.setAttribute('disabled', 'true');
+        }
+
+        try {
+            const response = await fetch('http://localhost/Leads/api/enquiry.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: form.name.trim(),
+                    email: form.email,
+                    phone: form.phone.replace(/\D/g, ''),
+                    service: form.service,
+                    consent: form.consent,
+                    source: 'Website'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const submittedPhone = data.data.phone;
+
+                setDone({
+                    firstName: form.name.trim().split(" ")[0] || "there",
+                    refId: data.enquiry_id || "VK-LLP-" + Math.floor(10000 + Math.random() * 89999),
+                });
+
+                // 🔑 CRITICAL: Open login popup with pre-filled phone
+                setTimeout(() => {
+                    setShowLogin(true);
+                    setLoginPhone(submittedPhone);
+                    setLoginTab("otp");
+                }, 1000);
+
+            } else {
+                alert(data.error || 'Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            console.error('Enquiry submission error:', error);
+            alert('Network error. Please check your connection and try again.');
+        } finally {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.textContent = 'SUBMIT YOUR QUERY';
+                submitBtn.removeAttribute('disabled');
+            }
+        }
     }
     function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
 
@@ -1007,24 +1058,63 @@ export default function LppPage() {
                                 <button className={loginTab === "pwd" ? "active" : ""} onClick={() => setLoginTab("pwd")}>Password</button>
                             </div>
                             {loginTab === "otp" ? (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        const response = await fetch(`http://localhost/Leads/api/check-user.php?phone=${loginPhone}`);
+                                        const data = await response.json();
+                                        if (data.exists) {
+                                            alert(`Welcome back ${data.user.name}! Login successful.`);
+                                            setShowLogin(false);
+                                        } else {
+                                            alert('New user! Please complete your profile.');
+                                        }
+                                    } catch (error) {
+                                        alert('Login failed. Please try again.');
+                                    }
+                                }}>
                                     <label className="form-label">Mobile Number</label>
                                     <div className="phone-wrap mb-3">
                                         <span className="phone-cc">+91</span>
-                                        <input className="form-control" inputMode="numeric" maxLength={10} placeholder="Registered mobile" />
+                                        <input
+                                            className="form-control"
+                                            inputMode="numeric"
+                                            maxLength={10}
+                                            placeholder="Registered mobile"
+                                            value={loginPhone}
+                                            onChange={(e) => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                            required
+                                        />
                                     </div>
-                                    <button className="btn btn-gold w-100"><i className="bx bx-mobile-vibration" /> Send OTP</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-mobile-vibration" /> Send OTP
+                                    </button>
                                 </form>
                             ) : (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    alert('Connect this to your login / VakilCoins wallet backend.');
+                                }}>
                                     <label className="form-label">Email or Mobile</label>
-                                    <input className="form-control mb-2" placeholder="you@company.com" />
+                                    <input
+                                        className="form-control mb-2"
+                                        placeholder="you@company.com"
+                                        defaultValue={loginPhone}
+                                    />
                                     <label className="form-label">Password</label>
                                     <input className="form-control mb-3" type="password" placeholder="Your password" />
-                                    <button className="btn btn-gold w-100"><i className="bx bx-log-in" /> Login to Wallet</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-log-in" /> Login to Wallet
+                                    </button>
                                 </form>
                             )}
-                            <div className="lm-note"><i className="bx bx-lock-alt" /> Secured login · your data is encrypted</div>
+                            <div className="lm-note">
+                                <i className="bx bx-lock-alt" /> Secured login · Your data is encrypted
+                                <br />
+                                <small style={{ color: '#666' }}>
+                                    {loginPhone ? `✓ Phone: +91 ${loginPhone}` : 'Enter your phone number to login'}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>

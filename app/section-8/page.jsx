@@ -50,48 +50,6 @@ const PROCESS = [
     { day: "Done!", t: "Your NGO is Live", p: "Your Section 8 Company is registered and ready to receive donations & grants legally.", done: true },
 ];
 
-/* incorporation base shared by Growth / Pro / Master */
-const BASE = [
-    "Register your Section 8 Company at the Ministry of Corporate Affairs",
-    "Section 8 licence application",
-    "Drafting & filing by experienced professionals",
-    "Expert advice and assistance",
-    "MCA processing & CIN",
-    "Company PAN & TAN",
-    "MOA (INC-13) & AOA drafting",
-    "Allotment of 2 DINs",
-    "2 × Digital Signature Certificates (DSC)",
-    "Current account opening support",
-];
-const GROWTH_ADD = [
-    "12A registration (income-tax exemption)",
-    "80G registration (donor tax deduction)",
-    "NITI Aayog (NGO Darpan) registration",
-    "CSR-1 Certificate",
-    "MSME / Udyam registration",
-    "ISO certification",
-    "150 CSR companies data (funding support)",
-    "Priority processing & dedicated support",
-];
-const PRO_ADD = [
-    "FCRA consultancy support",
-    "Dedicated CA/CS manager",
-    "1-year ROC & NGO compliance support",
-    "Accounting & Bookkeeping guidance",
-];
-const SOFTWARE = [
-    "Donation management",
-    "Member management",
-    "Receipt generation",
-    "Expense tracking",
-    "Accounting support",
-    "Staff / user access control",
-    "Daily collection reports",
-    "MIS reports",
-    "Branch management",
-    "Secure cloud backup",
-];
-
 const PLANS = [
     {
         tier: "Consult",
@@ -102,7 +60,6 @@ const PLANS = [
             "Registration roadmap"
         ]
     },
-
     {
         tier: "Basic",
         price: "2,999",
@@ -118,7 +75,6 @@ const PLANS = [
             "MCA processing & CIN allotment"
         ]
     },
-
     {
         tier: "Smart",
         price: "14,999",
@@ -132,7 +88,6 @@ const PLANS = [
             "ISO certification ★"
         ]
     },
-
     {
         tier: "Master",
         price: "24,999",
@@ -143,7 +98,6 @@ const PLANS = [
             "Compliance Support"
         ]
     },
-
     {
         tier: "Premium",
         price: "29,999",
@@ -158,7 +112,6 @@ const PLANS = [
         ]
     }
 ];
-
 
 const COMPARE = [
     ["Governing Law", "Companies Act, 2013", "Indian Trusts Act, 1882", "Societies Registration Act, 1860"],
@@ -201,6 +154,7 @@ export default function Section8Page() {
     const [showLogin, setShowLogin] = useState(false);
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(1);
+    const [loginPhone, setLoginPhone] = useState(""); // ✅ Added
 
     const [videoVisible, setVideoVisible] = useState(true);
     const [videoPosition, setVideoPosition] = useState({ x: 0, y: 0 });
@@ -216,22 +170,76 @@ export default function Section8Page() {
         const { name, value, type, checked } = e.target;
         setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
     }
-    function submit(e) {
+
+    // ✅ Submit function with API + Auto Popup
+    async function submit(e) {
         e.preventDefault();
+
         const err = {};
         if (!form.name.trim()) err.name = true;
         if (form.phone.replace(/\D/g, "").length !== 10) err.phone = true;
         if (!form.consent) err.consent = true;
         setErrors(err);
         if (Object.keys(err).length) return;
-        // TODO: POST `form` to your CRM / backend here.
-        setDone({
-            firstName: form.name.trim().split(" ")[0] || "there",
-            refId: "VK-S8-" + Math.floor(10000 + Math.random() * 89999),
-        });
-    }
-    function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
 
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.setAttribute('disabled', 'true');
+        }
+
+        try {
+            const response = await fetch('http://localhost/Leads/api/enquiry.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: form.name.trim(),
+                    email: form.email,
+                    phone: form.phone.replace(/\D/g, ''),
+                    service: form.service,
+                    consent: form.consent,
+                    source: 'Website'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const submittedPhone = data.data.phone;
+
+                setDone({
+                    firstName: form.name.trim().split(" ")[0] || "there",
+                    refId: data.enquiry_id || "VK-S8-" + Math.floor(10000 + Math.random() * 89999),
+                });
+
+                // 🔑 CRITICAL: Open login popup with pre-filled phone
+                setTimeout(() => {
+                    setShowLogin(true);
+                    setLoginPhone(submittedPhone);
+                    setLoginTab("otp");
+                }, 1000);
+
+            } else {
+                alert(data.error || 'Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            console.error('Enquiry submission error:', error);
+            alert('Network error. Please check your connection and try again.');
+        } finally {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.textContent = 'SUBMIT YOUR QUERY';
+                submitBtn.removeAttribute('disabled');
+            }
+        }
+    }
+
+    function openLogin(e) { 
+        if (e) e.preventDefault(); 
+        setShowLogin(true); 
+    }
+
+    // Video drag handlers
     const handleMouseDown = (e) => {
         e.preventDefault();
         setIsDragging(true);
@@ -253,7 +261,6 @@ export default function Section8Page() {
         setIsDragging(false);
     };
 
-    // Touch handlers for mobile
     const handleTouchStart = (e) => {
         const touch = e.touches[0];
         setIsDragging(true);
@@ -262,7 +269,6 @@ export default function Section8Page() {
             y: touch.clientY - videoPosition.y
         });
     };
-
 
     const handleTouchMove = (e) => {
         if (!isDragging) return;
@@ -428,7 +434,6 @@ export default function Section8Page() {
                                     <small>We are proud to welcome</small>
                                     <div className="amb-big">VISHAL MALHOTRA</div>
                                     <small>as Brand Ambassador of</small>
-                                    {/* <span className="amb-logo">Vakil<b>karo</b></span> */}
                                     <img
                                         src="/vakillogo.png"
                                         alt="Vakilkaro"
@@ -586,7 +591,6 @@ export default function Section8Page() {
                                 <a className="btn btn-gold" href="#login" onClick={openLogin}><i className="bx bx-wallet" /> Login to your VakilCoins wallet</a>
                             </div>
                             <div className="coins-note">
-
                                 <i className="bx bx-coin-stack"></i>
                                 <div>
                                     <strong>Access your VakilCoins wallet</strong>
@@ -623,17 +627,6 @@ export default function Section8Page() {
             <section className="section" id="about">
                 <div className="container">
                     <div className="row align-items-center g-5">
-                        {/* <div className="col-lg-6">
-                            <div className="eyebrow">Understand the basics</div>
-                            <h2 className="serif" style={{ fontSize: 36, margin: "10px 0 14px" }}>What is a Section 8 Company?</h2>
-                            <p className="about-body">A Section 8 Company is a non-profit organisation (NPO) registered under Section 8 of the Companies Act, 2013, to promote charitable objectives such as education, art, science, sports, research, social welfare, religion, charity or protection of the environment.</p>
-                            <p className="about-body">Its income and profits are applied solely toward its objectives and cannot be distributed as dividend to members. It combines the credibility and governance of a company with the purpose of an NGO.</p>
-                            <ul className="about-list">
-                                <li><i className="bx bx-check-shield" /> Separate legal entity with limited liability for members</li>
-                                <li><i className="bx bx-check-shield" /> Eligible for 12A & 80G income-tax exemptions</li>
-                                <li><i className="bx bx-check-shield" /> Preferred for CSR funding, grants & donations over Trusts/Societies</li>
-                            </ul>
-                        </div> */}
                         <div className="col-lg">
                             <div className="glance">
                                 <h4>Section 8 at a glance</h4>
@@ -733,214 +726,88 @@ export default function Section8Page() {
                 </div>
             </section>
 
-
             {/* ===== PRICING ===== */}
-
-
             <section className="section-8" id="pricing">
-
                 <div className="container">
-
                     <div className="section-8-header text-center">
-
-                        <span className="section-8-eyebrow">
-                            NO HIDDEN CHARGES
-                        </span>
-
+                        <span className="section-8-eyebrow">NO HIDDEN CHARGES</span>
                         <h2>Our Plans</h2>
-
-                        <p>
-                            Pick a plan that matches your NGO's stage.
-                            Each price is our professional fee — clear and fixed.
-                            Government fees & GST are charged separately, only as applicable.
-                        </p>
-
+                        <p>Pick a plan that matches your NGO's stage. Each price is our professional fee — clear and fixed. Government fees & GST are charged separately, only as applicable.</p>
                     </div>
-
-                    {/* PLAN TABS */}
 
                     <div className="row g-3 section-8-tabs">
-
                         {PLANS.map((plan, index) => (
-
                             <div className="col" key={index}>
-
                                 <button
-                                    className={`section-8-tab ${activePlan === index ? "active" : ""
-                                        }`}
+                                    className={`section-8-tab ${activePlan === index ? "active" : ""}`}
                                     onClick={() => setActivePlan(index)}
                                 >
-
                                     {plan.badge && (
-                                        <span className="section-8-badge">
-                                            {plan.badge}
-                                        </span>
+                                        <span className="section-8-badge">{plan.badge}</span>
                                     )}
-
                                     <h3>₹{plan.price}</h3>
-
                                     <span>{plan.tier}</span>
-
                                 </button>
-
                             </div>
-
                         ))}
-
                     </div>
-
-                    {/* DETAIL CARD */}
 
                     <div className="section-8-card">
-
                         <div className="row align-items-center">
-
                             <div className="col-lg-6">
-
                                 <div className="section-8-price-wrap">
-
-                                    <h2>
-                                        ₹{PLANS[activePlan].price}
-                                    </h2>
-
-                                    <span>
-                                        {PLANS[activePlan].tier}
-                                    </span>
-
+                                    <h2>₹{PLANS[activePlan].price}</h2>
+                                    <span>{PLANS[activePlan].tier}</span>
                                 </div>
-
                             </div>
-
                             <div className="col-lg-6 text-lg-end mt-3 mt-lg-0">
-
                                 <div className="fee-tooltip-wrap">
-
                                     <div className="vk-feeno">
                                         Professional fee only — GST & govt. fees
-
-                                        <button
-                                            className="vk-i"
-                                            type="button"
-                                            aria-label="Government fee breakdown"
-                                        >
+                                        <button className="vk-i" type="button" aria-label="Government fee breakdown">
                                             <i className="bx bx-info-circle"></i>
                                         </button>
-
-                                        {" "}extra
-
+                                        extra
                                         <span className="vk-tip" role="tooltip">
                                             <h5>Govt. & statutory fees — billed at actuals</h5>
-
                                             <ul>
-                                                <li>
-                                                    <span>Name reservation (MCA)</span>
-                                                    <span>~₹1,000</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>Section 8 licence + SPICe+</span>
-                                                    <span>₹0*</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>Stamp duty (MOA/AOA)</span>
-                                                    <span>state-based</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>PAN & TAN issuance</span>
-                                                    <span>~₹131</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>DSC (per director)</span>
-                                                    <span>~₹2,000</span>
-                                                </li>
-
-                                                <li>
-                                                    <span>12A / 80G filing</span>
-                                                    <span>₹0 (online)</span>
-                                                </li>
+                                                <li><span>Name reservation (MCA)</span><span>~₹1,000</span></li>
+                                                <li><span>Section 8 licence + SPICe+</span><span>₹0*</span></li>
+                                                <li><span>Stamp duty (MOA/AOA)</span><span>state-based</span></li>
+                                                <li><span>PAN & TAN issuance</span><span>~₹131</span></li>
+                                                <li><span>DSC (per director)</span><span>~₹2,000</span></li>
+                                                <li><span>12A / 80G filing</span><span>₹0 (online)</span></li>
                                             </ul>
-
-                                            <div className="note">
-                                                *Nil MCA fee for Section 8 companies. Final govt.
-                                                fees vary by state and are charged at actuals.
-                                                GST @ 18% applies on our professional fee.
-                                            </div>
+                                            <div className="note">*Nil MCA fee for Section 8 companies. Final govt. fees vary by state and are charged at actuals. GST @ 18% applies on our professional fee.</div>
                                         </span>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                         <hr />
-
-                        {/* Govt Fees Box */}
-
-
-                        <div className="section-8-plus">
-                            Everything in Basic, plus:
-                        </div>
-
+                        <div className="section-8-plus">Everything in Basic, plus:</div>
                         <div className="row mt-4">
-
                             {PLANS[activePlan].features.map((item, i) => (
-
-                                <div
-                                    className="col-lg-4 col-md-6 mb-3"
-                                    key={i}
-                                >
-
+                                <div className="col-lg-4 col-md-6 mb-3" key={i}>
                                     <div className="section-8-feature">
-
                                         <i className="bx bx-check-circle"></i>
-
                                         <span>{item}</span>
-
                                     </div>
-
                                 </div>
-
                             ))}
-
                         </div>
-
                         <div className="section-8-btns">
-
-                            <a
-                                href="#enquiry"
-                                className="btn section-8-register-btn"
-                            >
-                                <i className="bx bx-paper-plane"></i>
-                                Register Now
+                            <a href="#enquiry" className="btn section-8-register-btn">
+                                <i className="bx bx-paper-plane"></i> Register Now
                             </a>
-
-                            <a
-                                href="#enquiry"
-                                className="btn section-8-callback-btn"
-                            >
-                                <i className="bx bx-phone-call"></i>
-                                Request a Callback
+                            <a href="#enquiry" className="btn section-8-callback-btn">
+                                <i className="bx bx-phone-call"></i> Request a Callback
                             </a>
-
                         </div>
-
                     </div>
-
-                    <div className="section-8-note">
-                        ★ = exclusive value-adds most providers don't include.
-                    </div>
-
+                    <div className="section-8-note">★ = exclusive value-adds most providers don't include.</div>
                 </div>
-
             </section>
-
-
-
 
             {/* ===== COMPARISON ===== */}
             <section className="section" id="compare">
@@ -988,124 +855,6 @@ export default function Section8Page() {
                                 <div className="wcard"><div className="ic"><i className={"bx " + w.ic} /></div><h4>{w.t}</h4><p>{w.p}</p></div>
                             </div>
                         ))}
-                    </div>
-                </div>
-            </section>
-
-            <section className="section" id="news">
-                <div className="container">
-                    <div className="sec-head">
-                        <div className="eyebrow">In the News</div>
-                        <h2>Vakilkaro in Media</h2>
-                        <p>Trusted by leading publications and media houses across India.</p>
-                    </div>
-
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                        {/* NEWS 1 - Times of India */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop&crop=center"
-                                        alt="Times of India Feature"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-news news-icon"></i>
-                                    <span className="news-badge">Featured</span>
-                                    <span className="news-source-logo">📰 The Times of India</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">The Times of India</span>
-                                    <h4>Vakilkaro: India's Most Trusted LegalTech for MSMEs</h4>
-                                    <p>With over 15,000+ successful trademark registrations, Vakilkaro emerges as the go-to platform for small businesses across 200+ cities.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 2 - Hindustan Times + Brand Ambassador */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="/vishal_Copy.jpeg"
-                                        alt="Vishal Malhotra Brand Ambassador Hindustan Times"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-user-check news-icon"></i>
-                                    <span className="news-badge">Brand Ambassador</span>
-                                    <span className="news-source-logo">📰 Hindustan Times</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">Hindustan Times</span>
-                                    <h4>Bollywood's Vishal Malhotra Joins Vakilkaro as Brand Face</h4>
-                                    <p>Actor and entrepreneur Vishal Malhotra partners with Vakilkaro to spread awareness about intellectual property rights among India's youth.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 3 - The Hindu BusinessLine */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center"
-                                        alt="The Hindu BusinessLine Award"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-trophy news-icon"></i>
-                                    <span className="news-badge">Award Winner</span>
-                                    <span className="news-source-logo">🏆 BusinessLine</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">The Hindu BusinessLine</span>
-                                    <h4>Top 10 Game-Changing LegalTech Startups of 2025</h4>
-                                    <p>Vakilkaro recognized for revolutionizing IP protection with AI-driven solutions, serving 50,000+ MSMEs across India.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 4 - CNBC Awaaz */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&h=400&fit=crop&crop=center"
-                                        alt="CNBC Awaaz Interview"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-microphone news-icon"></i>
-                                    <span className="news-badge">Exclusive</span>
-                                    <span className="news-source-logo">📺 CNBC Awaaz</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">CNBC Awaaz</span>
-                                    <h4>How Vakilkaro is Making Trademark Registration Accessible for All</h4>
-                                    <p>In an exclusive interview, founder Anshul shares how AI and automation are helping Indian entrepreneurs protect their brands at just ₹1,499.</p>
-                                    <a href="#" className="news-link">
-                                        Watch Interview <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="text-center mt-4">
-                        <a href="#" className="btn btn-gold">
-                            <i className="bx bx-news"></i> View All Media Coverage
-                        </a>
                     </div>
                 </div>
             </section>
@@ -1172,7 +921,6 @@ export default function Section8Page() {
                                 }}
                             />
                             <p className="about-f mt-3">India's trusted legaltech partner for trademark, company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
-                            {/* ===== SOCIAL ICONS ===== */}
                             <div className="social-icons mt-3">
                                 <a href="https://www.facebook.com/allvakilkaro" className="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                                     <i className="bx bxl-facebook"></i>
@@ -1231,7 +979,7 @@ export default function Section8Page() {
             <a className="callback-tab" href="#enquiry"><i className="bx bx-phone-call" /> Request Callback</a>
             <a className="wa-fab" href={WA} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i className="bx bxl-whatsapp" /></a>
 
-            {/* ===== LOGIN MODAL ===== */}
+            {/* ===== LOGIN MODAL - FIXED ===== */}
             {showLogin && (
                 <div className="lm-overlay" onClick={(e) => { if (e.target === e.currentTarget) setShowLogin(false); }}>
                     <div className="lm">
@@ -1247,24 +995,63 @@ export default function Section8Page() {
                                 <button className={loginTab === "pwd" ? "active" : ""} onClick={() => setLoginTab("pwd")}>Password</button>
                             </div>
                             {loginTab === "otp" ? (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        const response = await fetch(`http://localhost/Leads/api/check-user.php?phone=${loginPhone}`);
+                                        const data = await response.json();
+                                        if (data.exists) {
+                                            alert(`Welcome back ${data.user.name}! Login successful.`);
+                                            setShowLogin(false);
+                                        } else {
+                                            alert('New user! Please complete your profile.');
+                                        }
+                                    } catch (error) {
+                                        alert('Login failed. Please try again.');
+                                    }
+                                }}>
                                     <label className="form-label">Mobile Number</label>
                                     <div className="phone-wrap mb-3">
                                         <span className="phone-cc">+91</span>
-                                        <input className="form-control" inputMode="numeric" maxLength={10} placeholder="Registered mobile" />
+                                        <input
+                                            className="form-control"
+                                            inputMode="numeric"
+                                            maxLength={10}
+                                            placeholder="Registered mobile"
+                                            value={loginPhone}
+                                            onChange={(e) => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                            required
+                                        />
                                     </div>
-                                    <button className="btn btn-gold w-100"><i className="bx bx-mobile-vibration" /> Send OTP</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-mobile-vibration" /> Send OTP
+                                    </button>
                                 </form>
                             ) : (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    alert('Connect this to your login / VakilCoins wallet backend.');
+                                }}>
                                     <label className="form-label">Email or Mobile</label>
-                                    <input className="form-control mb-2" placeholder="you@company.com" />
+                                    <input
+                                        className="form-control mb-2"
+                                        placeholder="you@company.com"
+                                        defaultValue={loginPhone}
+                                    />
                                     <label className="form-label">Password</label>
                                     <input className="form-control mb-3" type="password" placeholder="Your password" />
-                                    <button className="btn btn-gold w-100"><i className="bx bx-log-in" /> Login to Wallet</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-log-in" /> Login to Wallet
+                                    </button>
                                 </form>
                             )}
-                            <div className="lm-note"><i className="bx bx-lock-alt" /> Secured login · your data is encrypted</div>
+                            <div className="lm-note">
+                                <i className="bx bx-lock-alt" /> Secured login · Your data is encrypted
+                                <br />
+                                <small style={{ color: '#666' }}>
+                                    {loginPhone ? `✓ Phone: +91 ${loginPhone}` : 'Enter your phone number to login'}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -179,7 +179,7 @@ export default function Page() {
   const [openFaq, setOpenFaq] = useState(0);
   const [showLogin, setShowLogin] = useState(false);
   const [loginTab, setLoginTab] = useState("otp");
-
+  const [loginPhone, setLoginPhone] = useState("");
 
   // Video states
   const [videoVisible, setVideoVisible] = useState(true);
@@ -197,25 +197,80 @@ export default function Page() {
     setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
   }
 
-  function submit(e) {
+  // ✅ Using fetch instead of axios
+  async function submit(e) {
     e.preventDefault();
+
+    // Validation
     const err = {};
     if (!form.name.trim()) err.name = true;
     if (form.phone.replace(/\D/g, "").length !== 10) err.phone = true;
     if (!form.consent) err.consent = true;
     setErrors(err);
     if (Object.keys(err).length) return;
-    setDone({
-      firstName: form.name.trim().split(" ")[0] || "there",
-      refId: "VK-TM-" + Math.floor(10000 + Math.random() * 89999),
-    });
+
+    // Show loading state
+    const submitBtn = document.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.setAttribute('disabled', 'true');
+    }
+
+    try {
+      // API call using fetch
+      const response = await fetch('http://localhost/Leads/api/enquiry.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email,
+          phone: form.phone.replace(/\D/g, ''),
+          service: form.service,
+          consent: form.consent,
+          source: 'Website'
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const submittedPhone = data.data.phone;
+
+        // Close the form and show success
+        setDone({
+          firstName: form.name.trim().split(" ")[0] || "there",
+          refId: data.enquiry_id || "VK-TM-" + Math.floor(10000 + Math.random() * 89999),
+        });
+
+        // 🔑 CRITICAL: Open login popup with pre-filled phone
+        setTimeout(() => {
+          setShowLogin(true);
+          setLoginPhone(submittedPhone);
+          setLoginTab("otp");
+        }, 1000);
+
+      } else {
+        alert(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Enquiry submission error:', error);
+      alert('Network error. Please check your connection and try again.');
+    } finally {
+      // Reset button
+      const submitBtn = document.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.textContent = 'SUBMIT YOUR QUERY';
+        submitBtn.removeAttribute('disabled');
+      }
+    }
   }
 
   function openLogin(e) {
     if (e) e.preventDefault();
     setShowLogin(true);
   }
-
 
   // Video drag handlers
   const handleMouseDown = (e) => {
@@ -640,7 +695,10 @@ export default function Page() {
               <div className="col" key={b.t}>
                 <div className="bcard">
                   <div className="ic">
-                    <i className={b.ic}></i>
+                    <i
+                      className={b.ic}
+                      style={{ color: "var(--gold)" }}
+                    ></i>
                   </div>
                   <h4>{b.t}</h4>
                   <p>{b.p}</p>
@@ -807,7 +865,7 @@ export default function Page() {
         <div className="container">
           <div className="sec-head">
             <div className="eyebrow">In the News</div>
-            <h2>Vakilkaro in Media</h2>
+            <h2>Vakilkaro in News</h2>
             <p>Trusted by leading publications and media houses across India.</p>
           </div>
 
@@ -817,7 +875,7 @@ export default function Page() {
               <div className="news-card">
                 <div className="news-img">
                   <img
-                    src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop&crop=center"
+                    src="/zeroto4cr.png"
                     alt="Times of India Feature"
                     loading="lazy"
                   />
@@ -827,16 +885,15 @@ export default function Page() {
                   <span className="news-source-logo">📰 The Times of India</span>
                 </div>
                 <div className="news-body">
-                  <span className="news-source">The Times of India</span>
-                  <h4>Vakilkaro: India's Most Trusted LegalTech for MSMEs</h4>
-                  <p>With over 15,000+ successful trademark registrations, Vakilkaro emerges as the go-to platform for small businesses across 200+ cities.</p>
-                  <a href="#" className="news-link">
+                  <span className="news-source">the hans of india</span>
+                  <h4>From Zero to ₹4 Crore: The Heart and Hustle of Vakilkaro</h4>
+                  <p>Discover the inspiring journey of Vakilkaro, from zero to ₹4 crore, showcasing entrepreneurial grit, innovation, and the relentless hustle behind building a successful legal services platform.</p>
+                  <a href="https://www.thehansindia.com/business/from-zero-to-4-crore-the-heart-and-hustle-of-vakilkaro-1065616" target="_blank" className="news-link">
                     Read Full Story <i className="bx bx-right-arrow-alt"></i>
                   </a>
                 </div>
               </div>
             </div>
-
             {/* NEWS 2 - Hindustan Times + Brand Ambassador */}
             <div className="col">
               <div className="news-card">
@@ -861,13 +918,12 @@ export default function Page() {
                 </div>
               </div>
             </div>
-
             {/* NEWS 3 - The Hindu BusinessLine */}
             <div className="col">
               <div className="news-card">
                 <div className="news-img">
                   <img
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center"
+                    src="abp.png"
                     alt="The Hindu BusinessLine Award"
                     loading="lazy"
                   />
@@ -877,16 +933,15 @@ export default function Page() {
                   <span className="news-source-logo">🏆 BusinessLine</span>
                 </div>
                 <div className="news-body">
-                  <span className="news-source">The Hindu BusinessLine</span>
-                  <h4>Top 10 Game-Changing LegalTech Startups of 2025</h4>
-                  <p>Vakilkaro recognized for revolutionizing IP protection with AI-driven solutions, serving 50,000+ MSMEs across India.</p>
-                  <a href="#" className="news-link">
+                  <span className="news-source">abp live</span>
+                  <h4>लीगल कंसल्टेंसी से कहीं आगे, 'वकीलकरो' के स्ट्रैटेजिक लीगल-टेक मॉडल ने बिज़नेस जगत में मचाई हलचल</h4>
+                  <p>वकीलकरो, श्री सतेंद्र सैनी और श्रीमती ज्योति सैनी का दूरदर्शी प्रयास है, जो भारत का अग्रणी लीगल-टेक पावरहाउस बन चुका है. यह उद्यमियों के लिए जटिल कानूनी प्रक्रियाओं को ऑनलाइन सरल बनाता है.</p>
+                  <a href="https://www.abplive.com/brand-wire/vakilkaro-india-s-leading-legal-tech-for-business-registration-compliance-3122518" target="_blank" className="news-link">
                     Read Full Story <i className="bx bx-right-arrow-alt"></i>
                   </a>
                 </div>
               </div>
             </div>
-
             {/* NEWS 4 - CNBC Awaaz */}
             <div className="col">
               <div className="news-card">
@@ -1051,8 +1106,8 @@ export default function Page() {
             <div className="lm-head">
               <button className="lm-close" onClick={() => setShowLogin(false)} aria-label="Close">×</button>
               <span className="lm-coin"><i className="bx bxs-coin" /> VakilCoins Wallet</span>
-              <h3>Customer Login</h3>
-              <p>Access your VakilCoins, redeem rewards & track your filings.</p>
+              <h3>Welcome Back!</h3>
+              <p>Complete your profile to track your trademark filing & earn VakilCoins</p>
             </div>
             <div className="lm-body">
               <div className="lm-tabs">
@@ -1060,29 +1115,68 @@ export default function Page() {
                 <button className={loginTab === "pwd" ? "active" : ""} onClick={() => setLoginTab("pwd")}>Password</button>
               </div>
               {loginTab === "otp" ? (
-                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  // Check if user exists using fetch
+                  try {
+                    const response = await fetch(`http://localhost/Leads/api/check-user.php?phone=${loginPhone}`);
+                    const data = await response.json();
+                    if (data.exists) {
+                      alert(`Welcome back ${data.user.name}! Login successful.`);
+                      setShowLogin(false);
+                    } else {
+                      alert('New user! Please complete your profile.');
+                    }
+                  } catch (error) {
+                    alert('Login failed. Please try again.');
+                  }
+                }}>
                   <label className="form-label">Mobile Number</label>
                   <div className="phone-wrap mb-3">
                     <span className="phone-cc">+91</span>
-                    <input className="form-control" inputMode="numeric" maxLength={10} placeholder="Registered mobile" />
+                    <input
+                      className="form-control"
+                      inputMode="numeric"
+                      maxLength={10}
+                      placeholder="Registered mobile"
+                      value={loginPhone}
+                      onChange={(e) => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      required
+                    />
                   </div>
-                  <button className="btn btn-gold w-100"><i className="bx bx-mobile-vibration" /> Send OTP</button>
+                  <button className="btn btn-gold w-100" type="submit">
+                    <i className="bx bx-mobile-vibration" /> Send OTP
+                  </button>
                 </form>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  alert('Connect this to your login / VakilCoins wallet backend.');
+                }}>
                   <label className="form-label">Email or Mobile</label>
-                  <input className="form-control mb-2" placeholder="you@company.com" />
+                  <input
+                    className="form-control mb-2"
+                    placeholder="you@company.com"
+                    defaultValue={loginPhone}
+                  />
                   <label className="form-label">Password</label>
                   <input className="form-control mb-3" type="password" placeholder="Your password" />
-                  <button className="btn btn-gold w-100"><i className="bx bx-log-in" /> Login to Wallet</button>
+                  <button className="btn btn-gold w-100" type="submit">
+                    <i className="bx bx-log-in" /> Login to Wallet
+                  </button>
                 </form>
               )}
-              <div className="lm-note"><i className="bx bx-lock-alt" /> Secured login · your data is encrypted</div>
+              <div className="lm-note">
+                <i className="bx bx-lock-alt" /> Secured login · Your data is encrypted
+                <br />
+                <small style={{ color: '#666' }}>
+                  {loginPhone ? `✓ Phone: +91 ${loginPhone}` : 'Enter your phone number to login'}
+                </small>
+              </div>
             </div>
           </div>
         </div>
       )}
-
 
     </>
   );

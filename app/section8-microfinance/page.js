@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 
-
 /* ---------------- Section 8 Microfinance DATA ---------------- */
 const STATS = [
     { value: "10,000", pl: "+", label: "Companies Registered" },
@@ -100,7 +99,7 @@ export default function Section8MicrofinancePage() {
     const [showLogin, setShowLogin] = useState(false);
     const [loginTab, setLoginTab] = useState("otp");
     const [activePlan, setActivePlan] = useState(2);
-
+    const [loginPhone, setLoginPhone] = useState(""); // ✅ Added
 
     // Video states
     const [videoVisible, setVideoVisible] = useState(true);
@@ -117,21 +116,93 @@ export default function Section8MicrofinancePage() {
         const { name, value, type, checked } = e.target;
         setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
     }
-    function submit(e) {
+
+    // ✅ FIXED: Submit function with proper API call
+    async function submit(e) {
         e.preventDefault();
+
+        // Validation
         const err = {};
         if (!form.name.trim()) err.name = true;
         if (form.phone.replace(/\D/g, "").length !== 10) err.phone = true;
         if (!form.consent) err.consent = true;
         setErrors(err);
         if (Object.keys(err).length) return;
-        setDone({
-            firstName: form.name.trim().split(" ")[0] || "there",
-            refId: "VK-MF-" + Math.floor(10000 + Math.random() * 89999),
-        });
-    }
-    function openLogin(e) { if (e) e.preventDefault(); setShowLogin(true); }
 
+        // Show loading state
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.setAttribute('disabled', 'true');
+        }
+
+        try {
+            console.log('📤 Sending enquiry:', {
+                name: form.name.trim(),
+                phone: form.phone.replace(/\D/g, ''),
+                service: form.service
+            });
+
+            // API call using fetch
+            const response = await fetch('http://localhost/Leads/api/enquiry.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: form.name.trim(),
+                    email: form.email,
+                    phone: form.phone.replace(/\D/g, ''),
+                    service: form.service,
+                    consent: form.consent,
+                    source: 'Website'
+                })
+            });
+
+            const data = await response.json();
+            console.log('📥 API Response:', data);
+
+            if (data.success) {
+                const submittedPhone = data.data.phone;
+                console.log('✅ Enquiry successful! Phone:', submittedPhone);
+
+                // Close the form and show success
+                setDone({
+                    firstName: form.name.trim().split(" ")[0] || "there",
+                    refId: data.enquiry_id || "VK-MF-" + Math.floor(10000 + Math.random() * 89999),
+                });
+
+                // 🔑 CRITICAL: Open login popup with pre-filled phone
+                console.log('🔑 Opening login popup...');
+                setTimeout(() => {
+                    console.log('⏰ Setting showLogin to true');
+                    setShowLogin(true);
+                    setLoginPhone(submittedPhone);
+                    setLoginTab("otp");
+                    console.log('✅ showLogin is now:', true);
+                }, 1000);
+
+            } else {
+                console.log('❌ API returned success: false', data.error);
+                alert(data.error || 'Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            console.error('❌ Enquiry submission error:', error);
+            alert('Network error. Please check your connection and try again.');
+        } finally {
+            // Reset button
+            const submitBtn = document.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.textContent = 'SUBMIT YOUR QUERY';
+                submitBtn.removeAttribute('disabled');
+            }
+        }
+    }
+
+    function openLogin(e) { 
+        if (e) e.preventDefault(); 
+        setShowLogin(true); 
+    }
 
     // Video drag handlers
     const handleMouseDown = (e) => {
@@ -204,8 +275,6 @@ export default function Section8MicrofinancePage() {
         }
     }, []);
 
-
-
     return (
         <>
             {/* ===== TOP BAR ===== */}
@@ -256,8 +325,6 @@ export default function Section8MicrofinancePage() {
                     </div>
                 </div>
             </nav>
-
-
 
             {/* ===== FLOATING VIDEO PLAYER ===== */}
             {videoVisible && (
@@ -333,7 +400,6 @@ export default function Section8MicrofinancePage() {
                                     <small>We are proud to welcome</small>
                                     <div className="amb-big">VISHAL MALHOTRA</div>
                                     <small>as Brand Ambassador of</small>
-                                    {/* <span className="amb-logo">Vakil<b>karo</b></span> */}
                                     <img
                                         src="/vakillogo.png"
                                         alt="Vakilkaro"
@@ -756,124 +822,6 @@ export default function Section8MicrofinancePage() {
                 </div>
             </section>
 
-            <section className="section" id="news">
-                <div className="container">
-                    <div className="sec-head">
-                        <div className="eyebrow">In the News</div>
-                        <h2>Vakilkaro in Media</h2>
-                        <p>Trusted by leading publications and media houses across India.</p>
-                    </div>
-
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                        {/* NEWS 1 - Times of India */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop&crop=center"
-                                        alt="Times of India Feature"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-news news-icon"></i>
-                                    <span className="news-badge">Featured</span>
-                                    <span className="news-source-logo">📰 The Times of India</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">The Times of India</span>
-                                    <h4>Vakilkaro: India's Most Trusted LegalTech for MSMEs</h4>
-                                    <p>With over 15,000+ successful trademark registrations, Vakilkaro emerges as the go-to platform for small businesses across 200+ cities.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 2 - Hindustan Times + Brand Ambassador */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="/vishal_Copy.jpeg"
-                                        alt="Vishal Malhotra Brand Ambassador Hindustan Times"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-user-check news-icon"></i>
-                                    <span className="news-badge">Brand Ambassador</span>
-                                    <span className="news-source-logo">📰 Hindustan Times</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">Hindustan Times</span>
-                                    <h4>Bollywood's Vishal Malhotra Joins Vakilkaro as Brand Face</h4>
-                                    <p>Actor and entrepreneur Vishal Malhotra partners with Vakilkaro to spread awareness about intellectual property rights among India's youth.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 3 - The Hindu BusinessLine */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center"
-                                        alt="The Hindu BusinessLine Award"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-trophy news-icon"></i>
-                                    <span className="news-badge">Award Winner</span>
-                                    <span className="news-source-logo">🏆 BusinessLine</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">The Hindu BusinessLine</span>
-                                    <h4>Top 10 Game-Changing LegalTech Startups of 2025</h4>
-                                    <p>Vakilkaro recognized for revolutionizing IP protection with AI-driven solutions, serving 50,000+ MSMEs across India.</p>
-                                    <a href="#" className="news-link">
-                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* NEWS 4 - CNBC Awaaz */}
-                        <div className="col">
-                            <div className="news-card">
-                                <div className="news-img">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&h=400&fit=crop&crop=center"
-                                        alt="CNBC Awaaz Interview"
-                                        loading="lazy"
-                                    />
-                                    <div className="news-overlay"></div>
-                                    <i className="bx bx-microphone news-icon"></i>
-                                    <span className="news-badge">Exclusive</span>
-                                    <span className="news-source-logo">📺 CNBC Awaaz</span>
-                                </div>
-                                <div className="news-body">
-                                    <span className="news-source">CNBC Awaaz</span>
-                                    <h4>How Vakilkaro is Making Trademark Registration Accessible for All</h4>
-                                    <p>In an exclusive interview, founder Anshul shares how AI and automation are helping Indian entrepreneurs protect their brands at just ₹1,499.</p>
-                                    <a href="#" className="news-link">
-                                        Watch Interview <i className="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="text-center mt-4">
-                        <a href="#" className="btn btn-gold">
-                            <i className="bx bx-news"></i> View All Media Coverage
-                        </a>
-                    </div>
-                </div>
-            </section>
-
             {/* ===== TESTIMONIALS ===== */}
             <section className="section" id="reviews">
                 <div className="container">
@@ -936,7 +884,6 @@ export default function Section8MicrofinancePage() {
                                 }}
                             />
                             <p className="about-f mt-3">India's trusted legaltech partner for trademark, company, NGO and tax registrations — making compliance simple, transparent and fast.</p>
-                            {/* ===== SOCIAL ICONS ===== */}
                             <div className="social-icons mt-3">
                                 <a href="https://www.facebook.com/allvakilkaro" className="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                                     <i className="bx bxl-facebook"></i>
@@ -1011,24 +958,63 @@ export default function Section8MicrofinancePage() {
                                 <button className={loginTab === "pwd" ? "active" : ""} onClick={() => setLoginTab("pwd")}>Password</button>
                             </div>
                             {loginTab === "otp" ? (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        const response = await fetch(`http://localhost/Leads/api/check-user.php?phone=${loginPhone}`);
+                                        const data = await response.json();
+                                        if (data.exists) {
+                                            alert(`Welcome back ${data.user.name}! Login successful.`);
+                                            setShowLogin(false);
+                                        } else {
+                                            alert('New user! Please complete your profile.');
+                                        }
+                                    } catch (error) {
+                                        alert('Login failed. Please try again.');
+                                    }
+                                }}>
                                     <label className="form-label">Mobile Number</label>
                                     <div className="phone-wrap mb-3">
                                         <span className="phone-cc">+91</span>
-                                        <input className="form-control" inputMode="numeric" maxLength={10} placeholder="Registered mobile" />
+                                        <input
+                                            className="form-control"
+                                            inputMode="numeric"
+                                            maxLength={10}
+                                            placeholder="Registered mobile"
+                                            value={loginPhone}
+                                            onChange={(e) => setLoginPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                            required
+                                        />
                                     </div>
-                                    <button className="btn btn-gold w-100"><i className="bx bx-mobile-vibration" /> Send OTP</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-mobile-vibration" /> Send OTP
+                                    </button>
                                 </form>
                             ) : (
-                                <form onSubmit={(e) => { e.preventDefault(); alert("Connect this to your login / VakilCoins wallet backend."); }}>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    alert('Connect this to your login / VakilCoins wallet backend.');
+                                }}>
                                     <label className="form-label">Email or Mobile</label>
-                                    <input className="form-control mb-2" placeholder="you@company.com" />
+                                    <input
+                                        className="form-control mb-2"
+                                        placeholder="you@company.com"
+                                        defaultValue={loginPhone}
+                                    />
                                     <label className="form-label">Password</label>
                                     <input className="form-control mb-3" type="password" placeholder="Your password" />
-                                    <button className="btn btn-gold w-100"><i className="bx bx-log-in" /> Login to Wallet</button>
+                                    <button className="btn btn-gold w-100" type="submit">
+                                        <i className="bx bx-log-in" /> Login to Wallet
+                                    </button>
                                 </form>
                             )}
-                            <div className="lm-note"><i className="bx bx-lock-alt" /> Secured login · your data is encrypted</div>
+                            <div className="lm-note">
+                                <i className="bx bx-lock-alt" /> Secured login · Your data is encrypted
+                                <br />
+                                <small style={{ color: '#666' }}>
+                                    {loginPhone ? `✓ Phone: +91 ${loginPhone}` : 'Enter your phone number to login'}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
