@@ -599,7 +599,7 @@ export default function PvtLtdPage() {
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {BENEFITS.map((b) => (
                             <div className="col" key={b.t}>
-                                <div className="bcard"><div className="ic"><i className={"bx " + b.ic} /></div><h4>{b.t}</h4><p>{b.p}</p></div>
+                                <div className="bcard"><div className="ic"><i className={"bx " + b.ic} style={{ color: "var(--gold)" }} /></div><h4>{b.t}</h4><p>{b.p}</p></div>
                             </div>
                         ))}
                     </div>
@@ -838,7 +838,7 @@ export default function PvtLtdPage() {
                 <div className="container">
                     <div className="sec-head">
                         <div className="eyebrow">In the News</div>
-                        <h2>Vakilkaro in Media</h2>
+                        <h2>Vakilkaro in News</h2>
                         <p>Trusted by leading publications and media houses across India.</p>
                     </div>
 
@@ -918,6 +918,122 @@ export default function PvtLtdPage() {
                             </div>
                         </div>
 
+                        {/* NEWS 4 - CNBC Awaaz */}
+                        <div className="col">
+                            <div className="news-card">
+                                <div className="news-img">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&h=400&fit=crop&crop=center"
+                                        alt="CNBC Awaaz Interview"
+                                        loading="lazy"
+                                    />
+                                    <div className="news-overlay"></div>
+                                    <i className="bx bx-microphone news-icon"></i>
+                                    <span className="news-badge">Exclusive</span>
+                                    <span className="news-source-logo">📺 CNBC Awaaz</span>
+                                </div>
+                                <div className="news-body">
+                                    <span className="news-source">CNBC Awaaz</span>
+                                    <h4>How Vakilkaro is Making Trademark Registration Accessible for All</h4>
+                                    <p>In an exclusive interview, founder Anshul shares how AI and automation are helping Indian entrepreneurs protect their brands at just ₹1,499.</p>
+                                    <a href="#" className="news-link">
+                                        Watch Interview <i className="bx bx-right-arrow-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-center mt-4">
+                        <a href="#" className="btn btn-gold">
+                            <i className="bx bx-news"></i> View All Media Coverage
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* ===== NEWS & MEDIA ===== */}
+            <section className="section" id="news">
+                <div className="container">
+                    <div className="sec-head">
+                        <div className="eyebrow">In the News</div>
+                        <h2>Vakilkaro in News</h2>
+                        <p>Trusted by leading publications and media houses across India.</p>
+                    </div>
+
+                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                        {/* NEWS 1 - Times of India */}
+                        <div className="col">
+                            <div className="news-card">
+                                <div className="news-img">
+                                    <img
+                                        src="/zeroto4cr.png"
+                                        alt="Times of India Feature"
+                                        loading="lazy"
+                                    />
+                                    <div className="news-overlay"></div>
+                                    <i className="bx bx-news news-icon"></i>
+                                    <span className="news-badge">Featured</span>
+                                    <span className="news-source-logo">📰 The Times of India</span>
+                                </div>
+                                <div className="news-body">
+                                    <span className="news-source">the hans of india</span>
+                                    <h4>From Zero to ₹4 Crore: The Heart and Hustle of Vakilkaro</h4>
+                                    <p>Discover the inspiring journey of Vakilkaro, from zero to ₹4 crore, showcasing entrepreneurial grit, innovation, and the relentless hustle behind building a successful legal services platform.</p>
+                                    <a href="https://www.thehansindia.com/business/from-zero-to-4-crore-the-heart-and-hustle-of-vakilkaro-1065616" target="_blank" className="news-link">
+                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {/* NEWS 2 - Hindustan Times + Brand Ambassador */}
+                        <div className="col">
+                            <div className="news-card">
+                                <div className="news-img">
+                                    <img
+                                        src="/vishal_Copy.jpeg"
+                                        alt="Vishal Malhotra Brand Ambassador Hindustan Times"
+                                        loading="lazy"
+                                    />
+                                    <div className="news-overlay"></div>
+                                    <i className="bx bx-user-check news-icon"></i>
+                                    <span className="news-badge">Brand Ambassador</span>
+                                    <span className="news-source-logo">📰 Hindustan Times</span>
+                                </div>
+                                <div className="news-body">
+                                    <span className="news-source">Hindustan Times</span>
+                                    <h4>Bollywood's Vishal Malhotra Joins Vakilkaro as Brand Face</h4>
+                                    <p>Actor and entrepreneur Vishal Malhotra partners with Vakilkaro to spread awareness about intellectual property rights among India's youth.</p>
+                                    <a href="#" className="news-link">
+                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {/* NEWS 3 - The Hindu BusinessLine */}
+                        <div className="col">
+                            <div className="news-card">
+                                <div className="news-img">
+                                    <img
+                                        src="abp.png"
+                                        alt="The Hindu BusinessLine Award"
+                                        loading="lazy"
+                                    />
+                                    <div className="news-overlay"></div>
+                                    <i className="bx bx-trophy news-icon"></i>
+                                    <span className="news-badge">Award Winner</span>
+                                    <span className="news-source-logo">🏆 BusinessLine</span>
+                                </div>
+                                <div className="news-body">
+                                    <span className="news-source">abp live</span>
+                                    <h4>लीगल कंसल्टेंसी से कहीं आगे, 'वकीलकरो' के स्ट्रैटेजिक लीगल-टेक मॉडल ने बिज़नेस जगत में मचाई हलचल</h4>
+                                    <p>वकीलकरो, श्री सतेंद्र सैनी और श्रीमती ज्योति सैनी का दूरदर्शी प्रयास है, जो भारत का अग्रणी लीगल-टेक पावरहाउस बन चुका है. यह उद्यमियों के लिए जटिल कानूनी प्रक्रियाओं को ऑनलाइन सरल बनाता है.</p>
+                                    <a href="https://www.abplive.com/brand-wire/vakilkaro-india-s-leading-legal-tech-for-business-registration-compliance-3122518" target="_blank" className="news-link">
+                                        Read Full Story <i className="bx bx-right-arrow-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         {/* NEWS 4 - CNBC Awaaz */}
                         <div className="col">
                             <div className="news-card">
